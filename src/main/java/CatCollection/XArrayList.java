@@ -1,10 +1,19 @@
 package CatCollection;
 
+
+import java.util.Arrays;
+import java.util.Comparator;
+
 import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
+import CatCollection.Exception.CollectionException.ListException.IndexOutOfRangeException;
+import CatCollection.Util.ArrayTool;
 
 /**
  * 一个基于array为内部结构的list实现类
+ * 
+ * 该框架的另一个设计特点就是不写入一般用不到的方法!
+ * 比如用初始大小初始化生成一个list
  * @author Administrator
  *
  * @param <T>
@@ -34,16 +43,9 @@ public class XArrayList<T> extends AbstractList<T> {
 
 	
 	public XArrayList() {
-		this(default_size);
+		InitInnerArray(default_size);
 	}
 	
-	/**
-	 * 以一个初始大小初始化list
-	 * @param size
-	 */
-	public XArrayList(int size) {
-		InitInnerArray(size);
-	}
 	
 	/**
 	 * 初始化内部数组
@@ -65,36 +67,131 @@ public class XArrayList<T> extends AbstractList<T> {
 	}
 	
 	
-	@Override
-	public AbstractCollection<T> add(T value) {
-		
-		//元素唯一而且不包含该值
-		if(flag_onlyValue&&!contain(value))
-		{
-			
-		}
-		//元素不唯一
-		else if(!flag_onlyValue)
-		{
-			
-		}
-		else
-		{
-		 //直接报错 该框架的特点就是及早报错
-		//毕竟自己设置了唯一 又添加重复的值 这是自己的问题 不应该由框架静默处理
-		}
-		
-		
-		return this;
-	}
-
+	
 
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return 0;
+		return index+1;
+	}
+
+	@Override
+	protected void _realAdd(T value) {
+		ensureCapability(1);
+		
+		data[++index]=value;
+	}
+
+	
+	/**
+	 * 自动扩充内部数组 确保大小合适
+	 * @param i
+	 */
+	private void ensureCapability(int i) {
+		
+		int newSize=i+size();
+		//扩充数组直到数组的size可以容纳下新size
+		while(data.length<newSize)
+		{
+			expandArray();
+		}
+		
+		
+	}
+
+
+	/**
+	 * 扩充数组 采用的扩充法是oldSize*2+5
+	 */
+	private void expandArray() {
+		data=java.util.Arrays.copyOf(data, data.length*2+5);
+		
 	}
 	
+	@Override
+	public String toString() {
+	
+		
+		
+		return ArrayTool.toString(data,index);
+	}
+
+
+	@Override
+	protected void _realRemove(T value) {
+		
+		int i;
+		if((i=indexOf(value))!=-1)
+		{
+			System.arraycopy(data, i+1, data, i, size()-i);
+			index--;
+		}
+		
+	}
+
+
+
+	@Override
+	public int indexOf(T value) {
+		for(int i=0;i<size();i++)
+		{
+			if(data[i]==value)
+			{
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+
+
+	@Override
+	public int lastIndexOf(T value) {
+		
+		for(int i=size()-1;i>=0;i--)
+		{
+			if(data[i]==value)
+			{
+				return size()-i-1;
+			}
+		}
+		
+		return -1;
+	}
+
+
+	@Override
+	public T get(int index) {
+		checkRange(index);
+		
+		
+		return (T) data[index];
+	}
+
+
+	private void checkRange(int index) {
+		if(index<0||index>size()-1)
+		{
+			throw new IndexOutOfRangeException(index,size());
+		}
+		
+	}
+
+
+	/**
+	 * 进行排序
+	 * @param comparator
+	 */
+	protected void sort(Comparator<T> comparator) {
+		
+		if(comparator!=null)
+		{
+			Arrays.sort((T[])data, 0, size(), comparator);
+
+		}
+	}
+	
+
 	
 	
 	

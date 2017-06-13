@@ -1,0 +1,143 @@
+package Collection;
+
+import static org.junit.Assert.*;
+
+import java.util.Arrays;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import CatCollection.XArrayList;
+import CatCollection.Exception.NullValueException;
+import CatCollection.Exception.CollectionException.OnlyValueException;
+import CatCollection.Exception.CollectionException.ListException.IndexOutOfRangeException;
+
+/**
+ * 貌似junit为每个测试方法都重新创建一个类 即每次创建一个类只测试一个方法
+ * 所以要想在所有方法被测试前设置一些东西只能在静态方法里而不是构造器里
+ * @author Administrator
+ *
+ */
+public class XArrayListTest {
+	private XArrayList<Integer> list;
+	private XArrayList list2;
+
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+	}
+
+
+	
+	@Before
+	public void setUp() throws Exception {
+		this.list=new XArrayList<>();
+		list.add(5);
+		list.add(4);
+		list.add(3);
+		list.add(2);
+		list.add(1);
+		
+		this.list2=new XArrayList<>(true, false);
+	
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	
+	
+	
+	
+	@Test
+	public void testAdd() {
+		
+		list.add(0);
+		assertEquals(list.toString(), "[5,4,3,2,1,0]");
+	}
+	
+	
+	@Test(expected  =  NullValueException.class )
+	public void testAddNull() {
+		
+		list2.add(null);
+	
+	}
+	@Test(expected  =  OnlyValueException.class )
+	public void testAddSame() {
+		
+		list2.add(5);
+		list2.add(5);
+	
+	}
+	
+	@Test
+	public void testIndexof() {
+		
+	
+		assertEquals(0, list.indexOf(5));
+	}
+	
+	
+	@Test
+	public void testLastindexof() {
+		
+		
+		assertEquals(4, list.lastIndexOf(5));
+	}
+	
+	@Test
+	public void testGet() {
+
+		assertEquals(5, list.get(0),0);
+	}
+	
+	
+	 @Test(expected  =  IndexOutOfRangeException.class )
+	 
+	 public  void testGetError()  {
+	 
+	 list.get(list.size()+1);
+	 list.get(-1);
+	 
+	 } 
+	 
+	
+	@Test
+	public void testRemove() {
+	
+		list.remove(3);
+		assertEquals("[5,4,2,1]", list.toString());
+	}
+	
+	@Test(expected  =  NullValueException.class )
+	public void testRemoveError() {
+		
+		list2.remove(null);
+		
+	}
+	
+	
+
+	@Test
+	public void testSort() {
+		
+		list.setComparator((a,b)->a-b);
+		assertEquals("[1,2,3,4,5]",list.toString() );
+		
+		list.add(1);
+		list.add(-20);
+		assertEquals("[-20,1,1,2,3,4,5]",list.toString() );
+		
+	}
+	
+}

@@ -6,7 +6,6 @@ import java.util.Comparator;
 
 import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
-import CatCollection.Exception.CollectionException.ListException.IndexOutOfRangeException;
 import CatCollection.Util.ArrayTool;
 
 /**
@@ -169,15 +168,6 @@ public class XArrayList<T> extends AbstractList<T> {
 	}
 
 
-	private void checkRange(int index) {
-		if(index<0||index>size()-1)
-		{
-			throw new IndexOutOfRangeException(index,size());
-		}
-		
-	}
-
-
 	/**
 	 * 进行排序
 	 * @param comparator
@@ -190,6 +180,7 @@ public class XArrayList<T> extends AbstractList<T> {
 
 		}
 	}
+	
 	
 
 	

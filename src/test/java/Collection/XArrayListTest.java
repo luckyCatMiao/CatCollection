@@ -12,6 +12,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import CatCollection.XArrayList;
+import CatCollection.BaseCollection.AbstractCollection;
+import CatCollection.BaseCollection.AbstractList;
 import CatCollection.Exception.NullValueException;
 import CatCollection.Exception.CollectionException.OnlyValueException;
 import CatCollection.Exception.CollectionException.ListException.IndexOutOfRangeException;
@@ -23,8 +25,8 @@ import CatCollection.Exception.CollectionException.ListException.IndexOutOfRange
  *
  */
 public class XArrayListTest {
-	private XArrayList<Integer> list;
-	private XArrayList list2;
+	private AbstractList<Integer> list;
+	private AbstractList<Integer> list2;
 
 	
 	@BeforeClass
@@ -117,6 +119,11 @@ public class XArrayListTest {
 	
 		list.remove(3);
 		assertEquals("[5,4,2,1]", list.toString());
+		list.remove(2);
+		assertEquals("[5,4,1]", list.toString());
+		list.remove(1);
+		assertEquals("[5,4]", list.toString());
+		assertEquals(2, list.size());
 	}
 	
 	@Test(expected  =  NullValueException.class )
@@ -139,5 +146,36 @@ public class XArrayListTest {
 		assertEquals("[-20,1,1,2,3,4,5]",list.toString() );
 		
 	}
+	
+	
+	@Test
+	public void testSublist() {
+		
+		
+		
+		assertEquals("[1,2,3]",list.reverse().subList(0, 3).toString() );
+		
+	}
+	
+	
+	@Test
+	public void testClear() {
+	
+		
+		assertEquals(0,list.clear().size() );
+		
+	}
+	
+	@Test
+	public void testReverse() {
+	
+		list.removeAll(1,2,3);
+		
+		assertEquals("[4,5]",list.reverse().toString());
+		
+	}
+	
+	
+	
 	
 }

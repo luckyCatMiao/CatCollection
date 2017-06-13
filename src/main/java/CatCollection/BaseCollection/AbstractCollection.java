@@ -2,6 +2,7 @@ package CatCollection.BaseCollection;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 import CatCollection.Annotation.CollectionFlag;
 import CatCollection.Exception.NullValueException;
@@ -86,13 +87,14 @@ public abstract class AbstractCollection<T> implements MIterable<T> {
 	
 	
 	/**
-	 * 移除一个值
+	 * 移除一个值 (只移除第一个找到的值)
 	 * @param value
 	 */
 	public AbstractCollection<T> remove(T value)
 	{
 		flag_notNullTest(value);
 		_realRemove(value);
+		
 		
 		return this;
 	}
@@ -147,6 +149,59 @@ public abstract class AbstractCollection<T> implements MIterable<T> {
 	        
 		return false;
 	}
+	
+	
+	/**
+	 * 添加所有
+	 * @param values
+	 * @return
+	 */
+	public AbstractCollection<T> addAll(T... values)
+	{
+		
+		for(T value:values)
+		{
+			add(value);
+		}
+		
+		return this;
+	}
+	
+	
+	/**
+	 * 移除所有
+	 * @param values
+	 * @return
+	 */
+	public AbstractCollection<T> removeAll(T... values)
+	{
+		
+		for(T value:values)
+		{
+			remove(value);
+		}
+		
+		return this;
+	}
+
+	public AbstractCollection<T> clear() {
+		
+		
+		while(size()>0)
+		{
+			for(T element:this)
+			{
+				remove(element);
+				
+			}
+		}
+	
+		
+		return this;
+	}
+	
+	
+	
 	
 
 }

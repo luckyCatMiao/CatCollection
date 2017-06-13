@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import CatCollection.XArrayList;
+import CatCollection.Exception.CollectionException.ListException.IndexOutOfRangeException;
 import CatCollection.Util.ArrayTool;
 
 
@@ -104,6 +106,86 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		sort(getComparator());
 		return this;
 	}
+	
+	
+	
+	/**
+	 * 分割出子列表
+	 * @param startIndex
+	 * @param endIndex
+	 * @return
+	 */
+	public AbstractCollection<T> subList(int startIndex,int endIndex)
+	{
+		//实例化当前的子类 因为该类是抽象类不能实例化
+		AbstractCollection<T> list=NewInstance();
+	
+		checkRange(startIndex);
+		checkRange(endIndex);
+		if(startIndex<=endIndex)
+		{
+			
+			
+			for(int i=startIndex;i<endIndex;i++)
+			{
+				list.add(get(i));
+			}
+			
+			
+			
+		}
+		
+		return list;
+	}
+
+	
+	private AbstractList<T> NewInstance() {
+	Class<?> class1=this.getClass();
+		
+		AbstractList<T> list = null;
+		try {
+			list = (AbstractList<T>) class1.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+
+	public AbstractList<T> reverse()
+	{
+		
+		AbstractList<T> list=NewInstance();
+		for(int i=0;i<size();i++)
+		{
+			list.add(get(i));
+			
+		}
+		
+		clear();
+		
+		
+		for(int i=list.size()-1;i>=0;i--)
+		{
+			add(list.get(i));
+			
+		}
+		
+
+		
+		return this;
+	}
+
+	protected void checkRange(int index) {
+		if(index<0||index>size()-1)
+		{
+			throw new IndexOutOfRangeException(index,size());
+		}
+		
+	}
+	
 	
 	
 }

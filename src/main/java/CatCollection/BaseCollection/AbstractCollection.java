@@ -9,7 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Comparator;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import CatCollection.Annotation.CollectionFlag;
@@ -61,19 +62,13 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 	
 	
 	/**
-	 * 比较元素的方法
+	 * 集合内元素数量
+	 * @return
 	 */
-	protected Comparator<T> comparator;
-	
-	
 	abstract public int size();
 	
 	
-	@Override
-	public Iterator<T> iterator() {
-		
-		return null;
-	}
+	
 	
 	/**
 	 * 增加一个值
@@ -106,6 +101,10 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 		return this;
 	}
 	
+	/**
+	 * 集合是否为空
+	 * @return
+	 */
 	 public boolean isEmpty() {
 	        return size() == 0;
 	    }
@@ -191,6 +190,11 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 		return this;
 	}
 
+	
+	/**
+	 * 清空集合
+	 * @return
+	 */
 	public AbstractCollection<T> clear() {
 		
 		
@@ -252,15 +256,26 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 			e.printStackTrace();
 		}
 		
-		
-	
-		
-		
-		
-		
+
 		return t;
 	}
 	
-	
+	public T[] toArray()
+	{
+
+		//这里好神奇啊  居然可以强转的过来
+		//比如class1 为Object T为Integer 这样的强转居然也可以
+		//Array.newInstance是一个native方法 不知道怎么实现的
+		T[] arrays=(T[]) Array.newInstance(Object.class, size());
+		int index=0;
+		//数组的顺序依赖于子类实现的遍历器的遍历顺序
+		for(T element:this)
+		{
+			arrays[index++]=element;
+		}
+		
+		return arrays;
+	}
+
 
 }

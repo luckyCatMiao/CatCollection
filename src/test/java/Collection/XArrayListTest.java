@@ -2,8 +2,11 @@ package Collection;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
 import java.util.Arrays;
+import java.util.List;
 
+import org.apache.commons.math3.geometry.partitioning.Side;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,6 +20,7 @@ import CatCollection.BaseCollection.AbstractList;
 import CatCollection.Exception.NullValueException;
 import CatCollection.Exception.CollectionException.OnlyValueException;
 import CatCollection.Exception.CollectionException.ListException.IndexOutOfRangeException;
+import CatCollection.Util.ArrayTool;
 
 /**
  * 貌似junit为每个测试方法都重新创建一个类 即每次创建一个类只测试一个方法
@@ -194,5 +198,18 @@ public class XArrayListTest {
 		assertNotEquals(list, abstractList);
 	}
 	
+	@Test
+	public void testSet() {
+		assertNotEquals("[5,4,3,2,1]", list.set(6, 0).toString());
+	}
+	
+	@Test
+	public void testToArray() {
+		assertEquals("[5,4,3,2,1]",ArrayTool.toString(list.toArray(),list.size()-1));
+	
+	
+	
+	
+	}
 	
 }

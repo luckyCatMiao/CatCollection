@@ -13,6 +13,12 @@ import CatCollection.Util.ArrayTool;
  * 
  * 该框架的另一个设计特点就是不写入一般用不到的方法!
  * 比如用初始大小初始化生成一个list
+ * 
+ * 另一个特点就是不考虑效率优化 考虑简洁的继承和扩展
+ *比如sort 就直接卸载abstaactList里 先全部get出来成为数组 然后排序 再全部set回去 而不是在子类的
+ *内部结构(比如这里的内部array)上直接操作
+ *可能会慢一点 但是如果要实现一个新的treeList 就可以不用重写sort
+ * 
  * @author Administrator
  *
  * @param <T>
@@ -22,6 +28,11 @@ public class XArrayList<T> extends AbstractList<T> {
 	
 	
 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9181552448229759208L;
 
 	/**
 	 * 内部存储使用的array
@@ -81,6 +92,7 @@ public class XArrayList<T> extends AbstractList<T> {
 		data[++index]=value;
 	}
 
+	
 	
 	/**
 	 * 自动扩充内部数组 确保大小合适
@@ -169,19 +181,19 @@ public class XArrayList<T> extends AbstractList<T> {
 	}
 
 
-	/**
-	 * 进行排序
-	 * @param comparator
-	 */
-	protected void sort(Comparator<T> comparator) {
-		
-		if(comparator!=null)
-		{
-			Arrays.sort((T[])data, 0, size(), comparator);
 
-		}
+
+	@Override
+	public AbstractList<T> set(T value, int index) {
+		checkRange(index);
+		data[index]=value;
+		return this;
 	}
-	
+
+
+
+
+
 	
 
 	

@@ -1,4 +1,4 @@
-package CatCollection.Exception.CollectionException;
+package CatCollection.Exception;
 
 public class OnlyCanCallOnceException extends RuntimeException {
 

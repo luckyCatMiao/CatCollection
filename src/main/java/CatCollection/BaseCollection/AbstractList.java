@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 import CatCollection.XArrayList;
+import CatCollection.Exception.IllegalOpeator;
 import CatCollection.Exception.CollectionException.ListException.IndexOutOfRangeException;
 import CatCollection.Util.ArrayTool;
 
@@ -14,6 +15,10 @@ import CatCollection.Util.ArrayTool;
 public abstract class AbstractList<T> extends AbstractCollection<T> {
 
 	
+
+	/**
+	 * 比较元素的方法
+	 */
 	protected Comparator<T> comparator;
 	
 	private class ListIterator<T> implements Iterator<T> {
@@ -71,6 +76,13 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 */
 	abstract public T get(int index);
 	
+	/**
+	 * 设置索引处的值
+	 * @param index
+	 * @return
+	 */
+	abstract public AbstractList<T> set(T value,int index);
+	
 	@Override
 	public Iterator<T> iterator() {
 		return new ListIterator<T>();
@@ -89,14 +101,49 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	}
 
 
-	abstract protected void sort(Comparator<T> comparator);
+	private void sort(Comparator<T> comparator)
+	{
+		if(getComparator()!=null)
+		{
+			T[] objects=toArray();
+			Arrays.sort(objects, 0, size(), comparator);
 
+			
+			for(int i=0;i<objects.length;i++)
+			{
+				set((T) objects[i], i);
+			}
+		}
+	}
+	
+	
+	
 
 	
 	@Override
 	public AbstractCollection<T> add(T value) {
 		super.add(value);
 		sort(getComparator());
+		return this;
+	}
+	
+	
+	/**
+	 * 在指定位置插入
+	 * @param value
+	 * @param index
+	 * @return
+	 */
+	public AbstractCollection<T> add(T value,int index) {
+		checkRange(index);
+		if(getComparator()!=null)
+		{
+			throw new IllegalOpeator("自动排序的list不能在指定位置插入数据!");
+		}
+		else
+		{
+			
+		}
 		return this;
 	}
 	

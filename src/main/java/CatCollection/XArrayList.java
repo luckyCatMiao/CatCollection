@@ -37,7 +37,7 @@ public class XArrayList<T> extends AbstractList<T> {
 	/**
 	 * 默认的数组大小
 	 */
-	private static int default_size=10;
+	transient private static int default_size=10;
 
 
 	
@@ -128,13 +128,14 @@ public class XArrayList<T> extends AbstractList<T> {
 		
 	}
 
+	
 
 
 	@Override
 	public int indexOf(T value) {
 		for(int i=0;i<size();i++)
 		{
-			if(data[i]==value)
+			if(data[i].equals(value))
 			{
 				return i;
 			}
@@ -149,7 +150,7 @@ public class XArrayList<T> extends AbstractList<T> {
 		
 		for(int i=size()-1;i>=0;i--)
 		{
-			if(data[i]==value)
+			if(data[i].equals(value))
 			{
 				return size()-i-1;
 			}

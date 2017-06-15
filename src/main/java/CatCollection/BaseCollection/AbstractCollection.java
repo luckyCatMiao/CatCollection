@@ -1,12 +1,19 @@
 package CatCollection.BaseCollection;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.function.Consumer;
 
 import CatCollection.Annotation.CollectionFlag;
 import CatCollection.Exception.NullValueException;
-import CatCollection.Exception.CollectionException.OnlyCanCallOnceException;
 import CatCollection.Exception.CollectionException.OnlyValueException;
 
 /**
@@ -15,7 +22,7 @@ import CatCollection.Exception.CollectionException.OnlyValueException;
  *
  * @param <T>
  */
-public abstract class AbstractCollection<T> implements MIterable<T> {
+public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Serializable {
 
 	
 	/**
@@ -201,6 +208,58 @@ public abstract class AbstractCollection<T> implements MIterable<T> {
 	}
 	
 	
+
+	
+	/**
+	 * 浅克隆
+	 * @return
+	 */
+	public AbstractCollection<T> shallowClone()
+	{
+		
+		try {
+			return  (AbstractCollection<T>) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 深克隆 使用序列化	
+	 * @return
+	 */
+	public AbstractCollection<T> deepClone()
+	{
+		
+		ByteArrayOutputStream stream=new ByteArrayOutputStream();
+		ObjectOutputStream objectOutputStream;
+		ObjectInputStream objectInputStream;
+		AbstractCollection<T> t = null;
+		try {
+			objectOutputStream = new ObjectOutputStream(stream);
+			objectOutputStream.writeObject(this);
+			objectOutputStream.close();
+			 objectInputStream=new ObjectInputStream(new ByteArrayInputStream(stream.toByteArray()));
+			t=(AbstractCollection<T>) objectInputStream.readObject();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	
+		
+		
+		
+		
+		return t;
+	}
 	
 	
 

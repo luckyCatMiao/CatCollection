@@ -176,6 +176,23 @@ public class XArrayListTest {
 	}
 	
 	
+	@Test
+	public void testShallowClone() {
+	
+		
+		assertNotEquals(list, list.shallowClone());
+		
+	}
+	
+	@Test
+	public void testDeepClone() {
+		
+		AbstractList<Integer> abstractList=(AbstractList<Integer>) list.deepClone().remove(5);
+
+		assertEquals(5, list.size());
+		assertEquals(4, abstractList.size());	
+		assertNotEquals(list, abstractList);
+	}
 	
 	
 }

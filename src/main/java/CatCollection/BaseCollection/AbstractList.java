@@ -103,7 +103,6 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	@Override
 	public AbstractCollection<T> remove(T value) {
 		super.remove(value);
-		sort(getComparator());
 		return this;
 	}
 	

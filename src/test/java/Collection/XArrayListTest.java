@@ -208,6 +208,7 @@ public class XArrayListTest {
 		assertEquals("[5,4,3,2,1]",ArrayTool.toString(list.toArray(),list.size()-1));
 	
 	
+		Integer[] integers=list.toArray();
 	
 	
 	}

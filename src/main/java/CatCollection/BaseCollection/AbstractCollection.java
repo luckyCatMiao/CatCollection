@@ -260,13 +260,31 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 		return t;
 	}
 	
-	public T[] toArray()
+//	public T[] toArray()
+//	{
+//
+//		//这里好神奇啊  居然可以强转的过来
+//		//比如class1 为Object T为Integer 这样的强转居然也可以
+//		//Array.newInstance是一个native方法 不知道怎么实现的
+//		T[] arrays=(T[]) Array.newInstance(Object.class, size());
+//		int index=0;
+//		//数组的顺序依赖于子类实现的遍历器的遍历顺序
+//		for(T element:this)
+//		{
+//			arrays[index++]=element;
+//		}
+//		//发现好像不行。。 虽然可以编译 但是实际调用后上又报错了 还是Object类型??不知道什么鬼
+//		return arrays;
+//	}
+
+
+	public T[] toArray(Class<?> class1)
 	{
 
 		//这里好神奇啊  居然可以强转的过来
 		//比如class1 为Object T为Integer 这样的强转居然也可以
 		//Array.newInstance是一个native方法 不知道怎么实现的
-		T[] arrays=(T[]) Array.newInstance(Object.class, size());
+		T[] arrays=(T[]) Array.newInstance(class1, size());
 		int index=0;
 		//数组的顺序依赖于子类实现的遍历器的遍历顺序
 		for(T element:this)
@@ -276,6 +294,5 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 		
 		return arrays;
 	}
-
-
+	
 }

@@ -105,7 +105,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	{
 		if(getComparator()!=null)
 		{
-			T[] objects=toArray();
+			T[] objects=toArray(Object.class);
 			Arrays.sort(objects, 0, size(), comparator);
 
 			

@@ -10,8 +10,15 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import CatCollection.Annotation.CollectionFlag;
 import CatCollection.Exception.NullValueException;
@@ -159,6 +166,25 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 	
 	
 	/**
+	 * 转化成流(这里流框架就不自己写了 用java8的)
+	 * @return
+	 */
+	public Stream<T> stream() {
+        return StreamSupport.stream(ssss(), false);
+    }
+	
+	
+	
+
+	 private Spliterator<T> ssss() {
+		 
+		 ArrayList<T> list=new ArrayList<>();
+		 this.forEach(a->list.add(a));
+		 
+	     return Spliterators.spliterator(list, 0);
+	  }
+	 
+	/**
 	 * 添加所有
 	 * @param values
 	 * @return
@@ -292,6 +318,17 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 		}
 		
 		return arrays;
+	}
+
+	public AbstractCollection<T> addAll(Collection<T> collect) {
+		
+		for(T element:collect)
+		{
+			
+			add(element);
+		}
+			
+		return this;
 	}
 
 

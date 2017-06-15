@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import java.lang.reflect.Constructor;
+import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -117,4 +118,23 @@ public class AbstractionCollectionTest {
 	
 	}
 
+	
+	@Test
+	public void testStream() {
+		
+		String result = collection1.
+				deepClone().
+				clear().
+				addAll(collection1.stream().collect(Collectors.toList())).
+				toString();
+	
+		
+		assertEquals("[5,4,3,2,1]",result);
+	
+	
+	
+	
+	
+	}
+	
 }

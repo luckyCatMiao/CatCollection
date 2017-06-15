@@ -293,6 +293,8 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	}
 
 	
+	
+	
 	private AbstractList<T> NewInstance() {
 	Class<?> class1=this.getClass();
 		

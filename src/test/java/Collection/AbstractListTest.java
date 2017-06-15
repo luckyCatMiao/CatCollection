@@ -8,8 +8,10 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import Annotation.TestType;
 import CatCollection.XArrayList;
 import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
@@ -18,25 +20,25 @@ import CatCollection.Exception.CollectionException.ListException.IndexOutOfRange
 public class AbstractListTest extends AbstractionCollectionTest {
 
 	
-	AbstractList<Integer> collection1;
-	AbstractList<Integer> collection2;
+	private AbstractList<Integer> list1;
+	private AbstractCollection<Integer> list2;
 	
 	
 	public AbstractListTest() throws Exception {
 	//生成为父类的同名类型
 	//获取运行时子类
-	Class<?> childClass=this.getClass().getDeclaredField("collection1").getType();
+		Class<?> childClass=this.getClass().getAnnotation(TestType.class).Type();
 	Constructor<?> constructor1=childClass.getConstructor();
 	Constructor<?> constructor2=childClass.getConstructor(boolean.class,boolean.class);
 	
-	collection1=(AbstractList<Integer>) constructor1.newInstance();
-	collection2=(AbstractList<Integer>) constructor2.newInstance(true,false);
+	list1=(AbstractList<Integer>) constructor1.newInstance();
+	list2=(AbstractCollection<Integer>) constructor2.newInstance(true,false);
 	 
-	collection1.add(5);
-	collection1.add(4);
-	collection1.add(3);
-	collection1.add(2);
-	collection1.add(1);
+	list1.add(5);
+	list1.add(4);
+	list1.add(3);
+	list1.add(2);
+	list1.add(1);
 	}
 	
 	
@@ -49,39 +51,39 @@ public class AbstractListTest extends AbstractionCollectionTest {
 	public void testIndexof() {
 		
 	
-		assertEquals(0, collection1.indexOf(5));
+		assertEquals(0, list1.indexOf(5));
 	}
 
 	@Test
 	public void testLastindexof() {
 		
 		
-		assertEquals(4, collection1.lastIndexOf(5));
+		assertEquals(4, list1.lastIndexOf(5));
 	}
 
 	@Test
 	public void testGet() {
 	
-		assertEquals(5, collection1.get(0),0);
+		assertEquals(5, list1.get(0),0);
 	}
 
 	@Test(expected = IndexOutOfRangeException.class)
 	public void testGetError() {
 	
-	 collection1.get(collection1.size()+1);
-	 collection1.get(-1);
+	 list1.get(list1.size()+1);
+	 list1.get(-1);
 	
 	 }
 
 	@Test
 	public void testSort() {
 		
-		collection1.setComparator((a,b)->a-b);
-		assertEquals("[1,2,3,4,5]",collection1.toString() );
+		list1.setComparator((a,b)->a-b);
+		assertEquals("[1,2,3,4,5]",list1.toString() );
 		
-		collection1.add(1);
-		collection1.add(-20);
-		assertEquals("[-20,1,1,2,3,4,5]",collection1.toString() );
+		list1.add(1);
+		list1.add(-20);
+		assertEquals("[-20,1,1,2,3,4,5]",list1.toString() );
 		
 	}
 
@@ -90,22 +92,43 @@ public class AbstractListTest extends AbstractionCollectionTest {
 		
 		
 		
-		assertEquals("[1,2,3]",collection1.reverse().subList(0, 3).toString() );
+		assertEquals("[1,2,3]",list1.reverse().subList(0, 3).toString() );
 		
 	}
 
 	@Test
 	public void testReverse() {
 	
-		collection1.removeAll(1,2,3);
+		list1.removeAll(1,2,3);
 		
-		assertEquals("[4,5]",collection1.reverse().toString());
+		assertEquals("[4,5]",list1.reverse().toString());
 		
 	}
 
 	@Test
 	public void testSet() {
-		assertNotEquals("[5,4,3,2,1]", collection1.set(6, 0).toString());
+		assertEquals("[6,4,3,2,1]", list1.set(6, 0).toString());
+	}
+	
+	
+	@Test
+	public void testAddAt() {
+		assertEquals("[5,4,6,3,2,1]", list1.add(6, 2).toString());
 	}
 
+	@Test
+	public void testRemoveRange() {
+		assertEquals("[3,2,1]", list1.removeRange(0, 1).toString());
+	}
+	
+	@Test
+	public void testgetRange() {
+		assertEquals("[5,4,3]", list1.getRange(0, 2).toString());
+	}
+	
+	@Test
+	public void testToOneValue() {
+		assertEquals(5, list1.get(0),0);
+	}
+	
 }

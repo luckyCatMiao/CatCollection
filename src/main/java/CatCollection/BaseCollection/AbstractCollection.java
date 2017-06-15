@@ -83,6 +83,7 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 		
 		
 		_realAdd(value);
+	
 		
 		return this;
 	}
@@ -196,8 +197,6 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 	 * @return
 	 */
 	public AbstractCollection<T> clear() {
-		
-		
 		while(size()>0)
 		{
 			for(T element:this)
@@ -294,5 +293,7 @@ public abstract class AbstractCollection<T> implements MIterable<T>,Cloneable,Se
 		
 		return arrays;
 	}
+
+
 	
 }

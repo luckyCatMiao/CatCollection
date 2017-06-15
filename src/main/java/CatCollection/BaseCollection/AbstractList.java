@@ -4,9 +4,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 import CatCollection.XArrayList;
 import CatCollection.Exception.IllegalOpeator;
+import CatCollection.Exception.CollectionException.ListException.CanNotConvertToOneValueException;
 import CatCollection.Exception.CollectionException.ListException.IndexOutOfRangeException;
 import CatCollection.Util.ArrayTool;
 
@@ -58,15 +60,91 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 * @param value
 	 * @return
 	 */
-	abstract public int indexOf(T value);
+
+	public int indexOf(T value) {
+		if(getComparator()==null)
+		{
+		for(int i=0;i<size();i++)
+		{
+			if(get(i).equals(value))
+			{
+				return i;
+			}
+		}
+		}
+		else
+		{
+			//排序之后使用二分法查找索引
+			return binarySearch(value);
+		}
+		
+		return -1;
+	}
+
+
 	
+
+	private int binarySearch(T target) {
+		
+		int downIndex=0;
+		int upIndex=size()-1;
+		int centerIndex;
+		T centerValue;
+		
+		while(downIndex<=upIndex)
+		{
+			centerIndex=(downIndex+upIndex)/2;
+			
+			centerValue=get(centerIndex);
+			if(centerValue.equals(target))
+			{
+				return centerIndex;
+			}
+			else if(comparator.compare(centerValue, target)>0)
+			{
+				upIndex=centerIndex-1;
+				
+			}
+			else if(comparator.compare(centerValue, target)<0)
+			{
+				downIndex=centerIndex+1;
+			}
+			
+			
+			
+		}
+		
+		return -1;
+	}
+
 
 	/**
 	 * 返回从后往前遍历的index
 	 * @param value
 	 * @return
 	 */
-	abstract public int lastIndexOf(T value);
+	public int lastIndexOf(T value) {
+		
+		if(getComparator()==null)
+		{
+			
+		
+		for(int i=size()-1;i>=0;i--)
+		{
+			if(get(i).equals(value))
+			{
+				return size()-i-1;
+			}
+		}
+		}
+		else
+		{
+			//排序之后使用二分法查找索引
+			return size()-binarySearch(value);
+		}
+		
+		return -1;
+	}
 	
 	
 	/**
@@ -74,14 +152,40 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 * @param value
 	 * @return
 	 */
-	abstract public T get(int index);
+	 public T get(int index)
+	 {
+		checkRange(index);
+		
+		return getRange(index, index).toOneValue();
+		 
+		 
+	 }
 	
+	 /**
+	  * 将只有一个值的list转换为那个值类型
+	  * @return
+	  */
+	public  T toOneValue()
+	{
+		if(size()!=1)
+		{
+			throw new CanNotConvertToOneValueException(size()+"");
+		}
+		return _realToOneValue();
+	}
+
+
+
+	protected abstract T _realToOneValue();
+	
+
+
 	/**
 	 * 设置索引处的值
 	 * @param index
 	 * @return
 	 */
-	abstract public AbstractList<T> set(T value,int index);
+	abstract public AbstractCollection<T> set(T value,int index);
 	
 	@Override
 	public Iterator<T> iterator() {
@@ -101,7 +205,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	}
 
 
-	private void sort(Comparator<T> comparator)
+	protected void sort(Comparator<T> comparator)
 	{
 		if(getComparator()!=null)
 		{
@@ -118,15 +222,12 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	
 	
 	
-
-	
 	@Override
-	public AbstractCollection<T> add(T value) {
+	public AbstractList<T> add(T value) {
 		super.add(value);
-		sort(getComparator());
+		sort(comparator);
 		return this;
 	}
-	
 	
 	/**
 	 * 在指定位置插入
@@ -142,19 +243,18 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		}
 		else
 		{
-			
+			AbstractCollection<T> abstractList=getRange(index,size()-1);
+			removeRange(index, size()-1);
+			add(value);
+			addAll(abstractList.toArray(Object.class));
 		}
 		return this;
 	}
 	
-	@Override
-	public AbstractCollection<T> remove(T value) {
-		super.remove(value);
-		return this;
-	}
-	
-	
-	
+	public abstract AbstractList<T> removeRange(int startIndex, int endIndex);
+	public abstract AbstractList<T> getRange(int startIndex, int endIndex);
+
+
 	/**
 	 * 分割出子列表
 	 * @param startIndex
@@ -183,12 +283,20 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		
 		return list;
 	}
+	
+	/**
+	 * 父类使用遍历法 但是list可以使用二分查找 所以覆盖
+	 */
+	public boolean contain(T value)
+	{
+		return indexOf(value)!=-1;
+	}
 
 	
 	private AbstractList<T> NewInstance() {
 	Class<?> class1=this.getClass();
 		
-		AbstractList<T> list = null;
+	AbstractList<T> list = null;
 		try {
 			list = (AbstractList<T>) class1.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
@@ -199,6 +307,8 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		return list;
 	}
 
+	
+	
 
 	public AbstractList<T> reverse()
 	{

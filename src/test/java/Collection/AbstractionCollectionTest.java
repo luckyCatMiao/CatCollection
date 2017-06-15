@@ -8,23 +8,23 @@ import java.lang.reflect.Constructor;
 import org.junit.Before;
 import org.junit.Test;
 
+import Annotation.TestType;
 import CatCollection.XArrayList;
 import CatCollection.BaseCollection.AbstractCollection;
-import CatCollection.BaseCollection.AbstractList;
 import CatCollection.Exception.NullValueException;
 import CatCollection.Exception.CollectionException.OnlyValueException;
 import CatCollection.Util.ArrayTool;
 
 public class AbstractionCollectionTest {
 	
-	AbstractCollection<Integer> collection1;
-	AbstractCollection<Integer> collection2;
+	private AbstractCollection<Integer> collection1;
+	private AbstractCollection<Integer> collection2;
 	
 	
 	public AbstractionCollectionTest()throws Exception  {
 		//生成为父类的同名类型
 		//获取运行时子类
-		Class<?> childClass=this.getClass().getDeclaredField("collection1").getType();
+		Class<?> childClass=this.getClass().getAnnotation(TestType.class).Type();
 		Constructor<?> constructor1=childClass.getConstructor();
 		Constructor<?> constructor2=childClass.getConstructor(boolean.class,boolean.class);
 		
@@ -100,7 +100,7 @@ public class AbstractionCollectionTest {
 	@Test
 	public void testDeepClone() {
 		
-		AbstractList<Integer> abstractList=(AbstractList<Integer>) collection1.deepClone().remove(5);
+		AbstractCollection<Integer> abstractList=(AbstractCollection<Integer>) collection1.deepClone().remove(5);
 	
 		assertEquals(5, collection1.size());
 		assertEquals(4, abstractList.size());	

@@ -4,6 +4,8 @@ package CatCollection;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.junit.runner.manipulation.Sortable;
+
 import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
 import CatCollection.Util.ArrayTool;
@@ -121,8 +123,6 @@ public class XArrayList<T> extends AbstractList<T> {
 	
 	@Override
 	public String toString() {
-	
-		
 		
 		return ArrayTool.toString(data,index);
 	}
@@ -143,51 +143,49 @@ public class XArrayList<T> extends AbstractList<T> {
 	
 
 
-	@Override
-	public int indexOf(T value) {
-		for(int i=0;i<size();i++)
-		{
-			if(data[i].equals(value))
-			{
-				return i;
-			}
-		}
-		
-		return -1;
-	}
 
 
 	@Override
-	public int lastIndexOf(T value) {
-		
-		for(int i=size()-1;i>=0;i--)
-		{
-			if(data[i].equals(value))
-			{
-				return size()-i-1;
-			}
-		}
-		
-		return -1;
-	}
-
-
-	@Override
-	public T get(int index) {
-		checkRange(index);
-		
-		
-		return (T) data[index];
-	}
-
-
-
-
-	@Override
-	public AbstractList<T> set(T value, int index) {
+	public AbstractCollection<T> set(T value, int index) {
 		checkRange(index);
 		data[index]=value;
 		return this;
+	}
+
+
+	@Override
+	public AbstractList<T> removeRange(int startIndex, int endIndex) {
+		checkRange(startIndex);
+		checkRange(endIndex);
+		
+		int length = size()-endIndex;
+		System.arraycopy(data, endIndex+1, data, startIndex, length);
+		
+		index-=endIndex-startIndex+1;
+		
+		return this;
+	}
+
+
+	@Override
+	public AbstractList<T> getRange(int startIndex, int endIndex) {
+		AbstractList<T> abstractCollection=new XArrayList<>();
+		for(int i=startIndex;i<=endIndex;i++)
+		{
+			abstractCollection.add((T) data[i]);
+		}
+		
+		
+		return abstractCollection;
+	}
+
+
+	
+
+	@Override
+	protected T _realToOneValue() {
+	
+		return (T) data[0];
 	}
 
 

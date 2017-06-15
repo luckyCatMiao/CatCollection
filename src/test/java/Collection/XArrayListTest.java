@@ -12,6 +12,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 
+import Annotation.TestType;
 import CatCollection.XArrayList;
 import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
@@ -22,16 +23,19 @@ import CatCollection.BaseCollection.AbstractList;
  * @author Administrator
  *
  */
+
+/**
+ * 标记出最终要测试的实际类 基类会根据该annotation实例化字段
+ */
+@TestType(Type = XArrayList.class)
 public class XArrayListTest extends AbstractListTest {
+		
 	
 	public XArrayListTest() throws Exception {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	XArrayList<Integer> collection1;
-	XArrayList<Integer> collection2;
-	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}

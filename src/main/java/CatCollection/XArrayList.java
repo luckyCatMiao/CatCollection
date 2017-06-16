@@ -4,10 +4,8 @@ package CatCollection;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.junit.runner.manipulation.Sortable;
-
-import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
+import CatCollection.BaseCollection.FixCollection;
 import CatCollection.Util.ArrayTool;
 
 /**
@@ -146,7 +144,7 @@ public class XArrayList<T> extends AbstractList<T> {
 
 
 	@Override
-	public AbstractCollection<T> set(T value, int index) {
+	public FixCollection<T> set(T value, int index) {
 		checkRange(index);
 		data[index]=value;
 		return this;
@@ -169,6 +167,10 @@ public class XArrayList<T> extends AbstractList<T> {
 
 	@Override
 	public AbstractList<T> getRange(int startIndex, int endIndex) {
+		
+		checkRange(startIndex);
+		checkRange(endIndex);
+		
 		AbstractList<T> abstractCollection=new XArrayList<>();
 		for(int i=startIndex;i<=endIndex;i++)
 		{
@@ -179,6 +181,16 @@ public class XArrayList<T> extends AbstractList<T> {
 		return abstractCollection;
 	}
 
+
+	public AbstractList<T> getRangeAndRemove(int startIndex, int endIndex) {
+		
+		
+		AbstractList<T> list=getRange(startIndex, endIndex);
+		removeRange(startIndex, endIndex);
+		
+		return list;
+		
+	}
 
 	
 

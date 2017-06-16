@@ -12,6 +12,7 @@ import org.junit.Test;
 import Annotation.TestType;
 import CatCollection.XArrayList;
 import CatCollection.BaseCollection.AbstractCollection;
+import CatCollection.BaseCollection.AbstractList;
 import CatCollection.Exception.NullValueException;
 import CatCollection.Exception.CollectionException.OnlyValueException;
 import CatCollection.Util.ArrayTool;
@@ -26,12 +27,16 @@ public class AbstractionCollectionTest {
 		//生成为父类的同名类型
 		//获取运行时子类
 		Class<?> childClass=this.getClass().getAnnotation(TestType.class).Type();
+		
+		
+		
+		
+		
 		Constructor<?> constructor1=childClass.getConstructor();
 		Constructor<?> constructor2=childClass.getConstructor(boolean.class,boolean.class);
 		
 		collection1=(AbstractCollection<Integer>) constructor1.newInstance();
 		collection2=(AbstractCollection<Integer>) constructor2.newInstance(true,false);
-		 
 		collection1.add(5);
 		collection1.add(4);
 		collection1.add(3);

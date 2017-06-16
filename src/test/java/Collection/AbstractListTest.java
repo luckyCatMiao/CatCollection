@@ -13,15 +13,15 @@ import org.junit.Test;
 
 import Annotation.TestType;
 import CatCollection.XArrayList;
-import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
+import CatCollection.BaseCollection.FixCollection;
 import CatCollection.Exception.CollectionException.ListException.IndexOutOfRangeException;
 
 public class AbstractListTest extends AbstractionCollectionTest {
 
 	
 	private AbstractList<Integer> list1;
-	private AbstractCollection<Integer> list2;
+	private FixCollection<Integer> list2;
 	
 	
 	public AbstractListTest() throws Exception {
@@ -32,7 +32,7 @@ public class AbstractListTest extends AbstractionCollectionTest {
 	Constructor<?> constructor2=childClass.getConstructor(boolean.class,boolean.class);
 	
 	list1=(AbstractList<Integer>) constructor1.newInstance();
-	list2=(AbstractCollection<Integer>) constructor2.newInstance(true,false);
+	list2=(FixCollection<Integer>) constructor2.newInstance(true,false);
 	 
 	list1.add(5);
 	list1.add(4);

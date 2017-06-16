@@ -10,6 +10,7 @@ public class SortTool {
 	/**
 	 * 冒泡排序
 	 * @param list
+	 * @param comparator
 	 * @return
 	 */
 	static public <T> AbstractList<T> BubbleSort(AbstractList<T> list,Comparator<T> comparator)
@@ -40,8 +41,8 @@ public class SortTool {
 	/**
 	 * 选择排序
 	 * @param <T>
-	 * @param list1
-	 * @param object
+	 * @param list
+	 * @param comparator
 	 * @return
 	 */
 	public static <T> AbstractList<T> SelectSort(AbstractList<T> list, Comparator<T> comparator) {

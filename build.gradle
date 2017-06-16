@@ -27,3 +27,17 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
+tasks.withType(JavaCompile) {  
+    options.encoding = "UTF-8"  
+}
+
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
+}
+

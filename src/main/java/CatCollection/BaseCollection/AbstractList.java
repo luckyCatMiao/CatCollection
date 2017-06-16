@@ -84,6 +84,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 
 	
 
+
 	private int binarySearch(T target) {
 		
 		int downIndex=0;
@@ -149,7 +150,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	
 	/**
 	 * 索引返回值
-	 * @param value
+	 * @param index
 	 * @return
 	 */
 	 public T get(int index)
@@ -185,7 +186,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 * @param index
 	 * @return
 	 */
-	abstract public AbstractCollection<T> set(T value,int index);
+	abstract public FixCollection<T> set(T value,int index);
 	
 	@Override
 	public Iterator<T> iterator() {
@@ -235,7 +236,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 * @param index
 	 * @return
 	 */
-	public AbstractCollection<T> add(T value,int index) {
+	public FixCollection<T> add(T value,int index) {
 		checkRange(index);
 		if(getComparator()!=null)
 		{
@@ -261,7 +262,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 * @param endIndex
 	 * @return
 	 */
-	public AbstractCollection<T> subList(int startIndex,int endIndex)
+	public FixCollection<T> subList(int startIndex,int endIndex)
 	{
 		//实例化当前的子类 因为该类是抽象类不能实例化
 		AbstractCollection<T> list=NewInstance();

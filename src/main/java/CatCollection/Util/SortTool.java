@@ -44,7 +44,7 @@ public class SortTool {
 	 * @param object
 	 * @return
 	 */
-	public static <T> Object SelectSort(AbstractList<T> list, Comparator<T> comparator) {
+	public static <T> AbstractList<T> SelectSort(AbstractList<T> list, Comparator<T> comparator) {
 		
 		
 		int size=list.size();
@@ -75,7 +75,40 @@ public class SortTool {
 	}
 	
 	
+	/**
+	 * 插入排序
+	 * @param list
+	 * @param comparator
+	 * @return
+	 */
+	public static <T> AbstractList<T> InsertSort(AbstractList<T> list, Comparator<T> comparator) {
+		
+		
+	
+	   //为每个数排序
+		 for(int i=1;i<list.size();i++)
+		 {
+			 T nowValue=list.get(i);
+			 //为该数寻找合适的位置 左边是已经排好的
+			for(int a=0;a<i;a++)
+			{
+				T loopValue=list.get(a);
+				//如果小于最左边的数 则直接交换
+				if(comparator.compare(nowValue, loopValue)<0)
+				{
+					T cache=nowValue;
+					list.removeRange(i, i);
+					//System.arraycopy(list, a, list, a+1, i-a);
+					list.add(cache,a);
+					list.set(cache, a);
+					break;
+				}
+				
+				
+			}
+		 }
 	
 	
-	//插入排序
+		 return list;
+	}
 }

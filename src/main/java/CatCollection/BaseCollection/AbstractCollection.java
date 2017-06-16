@@ -22,7 +22,7 @@ import CatCollection.Exception.CollectionException.OnlyValueException;
  *
  * @param <T>
  */
-public abstract class AbstractCollection<T> extends FixCollection<T> implements MIterable<T>,Cloneable,Serializable {
+public abstract class AbstractCollection<T> extends FixCollection<T>{
 
 	
 	/**
@@ -66,7 +66,7 @@ public abstract class AbstractCollection<T> extends FixCollection<T> implements 
 	 * 该类的
 	 * @param value
 	 */
-	public FixCollection<T> add(T value)
+	public AbstractCollection<T> add(T value)
 	{
 		flag_onlyValueTest(value);
 		flag_notNullTest(value);
@@ -162,7 +162,7 @@ public abstract class AbstractCollection<T> extends FixCollection<T> implements 
 	 * @param values
 	 * @return
 	 */
-	public FixCollection<T> addAll(T... values)
+	public AbstractCollection<T> addAll(T... values)
 	{
 		
 		for(T value:values)
@@ -179,7 +179,40 @@ public abstract class AbstractCollection<T> extends FixCollection<T> implements 
 	 * @param values
 	 * @return
 	 */
-	public FixCollection<T> removeAll(T... values)
+	public AbstractCollection<T> removeAll(FixCollection<T> collection)
+	{
+		
+		for(T value:collection)
+		{
+			remove(value);
+		}
+		
+		return this;
+	}
+
+	/**
+	 * 添加所有
+	 * @param values
+	 * @return
+	 */
+	public AbstractCollection<T> addAll(FixCollection<T> collection)
+	{
+		
+		for(T value:collection)
+		{
+			add(value);
+		}
+		
+		return this;
+	}
+	
+	
+	/**
+	 * 移除所有
+	 * @param values
+	 * @return
+	 */
+	public AbstractCollection<T> removeAll(T... values)
 	{
 		
 		for(T value:values)
@@ -190,7 +223,6 @@ public abstract class AbstractCollection<T> extends FixCollection<T> implements 
 		return this;
 	}
 
-	
 	
 	
 //	public T[] toArray()

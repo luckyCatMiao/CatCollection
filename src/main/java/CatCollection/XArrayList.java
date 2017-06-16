@@ -4,6 +4,8 @@ package CatCollection;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.junit.experimental.theories.DataPoint;
+
 import CatCollection.BaseCollection.AbstractList;
 import CatCollection.BaseCollection.FixCollection;
 import CatCollection.Util.ArrayTool;
@@ -119,11 +121,6 @@ public class XArrayList<T> extends AbstractList<T> {
 		
 	}
 	
-	@Override
-	public String toString() {
-		
-		return ArrayTool.toString(data,index);
-	}
 
 
 	@Override
@@ -138,67 +135,23 @@ public class XArrayList<T> extends AbstractList<T> {
 		
 	}
 
-	
-
-
 
 
 	@Override
-	public FixCollection<T> set(T value, int index) {
-		checkRange(index);
+	protected T _realGet(int index) {
+		// TODO Auto-generated method stub
+		return (T) data[index];
+	}
+
+
+	@Override
+	protected void _realSet(T value, int index) {
 		data[index]=value;
-		return this;
-	}
-
-
-	@Override
-	public AbstractList<T> removeRange(int startIndex, int endIndex) {
-		checkRange(startIndex);
-		checkRange(endIndex);
-		
-		int length = size()-endIndex;
-		System.arraycopy(data, endIndex+1, data, startIndex, length);
-		
-		index-=endIndex-startIndex+1;
-		
-		return this;
-	}
-
-
-	@Override
-	public AbstractList<T> getRange(int startIndex, int endIndex) {
-		
-		checkRange(startIndex);
-		checkRange(endIndex);
-		
-		AbstractList<T> abstractCollection=new XArrayList<>();
-		for(int i=startIndex;i<=endIndex;i++)
-		{
-			abstractCollection.add((T) data[i]);
-		}
-		
-		
-		return abstractCollection;
-	}
-
-
-	public AbstractList<T> getRangeAndRemove(int startIndex, int endIndex) {
-		
-		
-		AbstractList<T> list=getRange(startIndex, endIndex);
-		removeRange(startIndex, endIndex);
-		
-		return list;
 		
 	}
+
 
 	
-
-	@Override
-	protected T _realToOneValue() {
-	
-		return (T) data[0];
-	}
 
 
 

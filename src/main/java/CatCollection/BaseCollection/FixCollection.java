@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Spliterator;
@@ -12,13 +13,15 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import CatCollection.Util.ArrayTool;
+
 /**
  * 一个无法加入和删除元素的集合 只供继承使用
  * @author Administrator
  *
  * @param <T>
  */
-abstract public class FixCollection<T> implements MIterable<T>{
+abstract public class FixCollection<T> implements MIterable<T>,Cloneable,Serializable {
 
 	/**
 	 * 集合内元素数量
@@ -55,10 +58,16 @@ abstract public class FixCollection<T> implements MIterable<T>{
 	 * 浅克隆
 	 * @return
 	 */
-	public AbstractCollection<T> shallowClone() {
+	public FixCollection<T> shallowClone() {
+		
+		return shallowClone(this.getClass());
+	}
+	
+	
+	public <E extends FixCollection<T>> E shallowClone(Class<E> class1) {
 		
 		try {
-			return  (AbstractCollection<T>) super.clone();
+			return   (E) super.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,18 +79,18 @@ abstract public class FixCollection<T> implements MIterable<T>{
 	 * 深克隆 使用序列化	
 	 * @return
 	 */
-	public AbstractCollection<T> deepClone() {
+	public <E extends FixCollection<T>> E deepClone(Class<E> class1) {
 		
 		ByteArrayOutputStream stream=new ByteArrayOutputStream();
 		ObjectOutputStream objectOutputStream;
 		ObjectInputStream objectInputStream;
-		AbstractCollection<T> t = null;
+		E t = null;
 		try {
 			objectOutputStream = new ObjectOutputStream(stream);
 			objectOutputStream.writeObject(this);
 			objectOutputStream.close();
 			 objectInputStream=new ObjectInputStream(new ByteArrayInputStream(stream.toByteArray()));
-			t=(AbstractCollection<T>) objectInputStream.readObject();
+			t=(E ) objectInputStream.readObject();
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -93,6 +102,16 @@ abstract public class FixCollection<T> implements MIterable<T>{
 		
 	
 		return t;
+	}
+	
+	/**
+	 * 深克隆 使用序列化	
+	 * @return
+	 */
+	public FixCollection<T> deepClone() {
+		
+		
+		return deepClone(getClass());
 	}
 
 	public T[] toArray(Class<?> class1) {
@@ -111,4 +130,9 @@ abstract public class FixCollection<T> implements MIterable<T>{
 		return arrays;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return ArrayTool.toString(toArray(Object.class), size()-1);
+	}
 }

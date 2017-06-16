@@ -16,6 +16,7 @@ import Annotation.TestType;
 import CatCollection.XArrayList;
 import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
+import CatCollection.BaseCollection.FixCollection;
 
 /**
  * 貌似junit为每个测试方法都重新创建一个类 即每次创建一个类只测试一个方法
@@ -42,6 +43,18 @@ public class XArrayListTest extends AbstractListTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+	}
+
+	@Override
+	protected void InitValue(FixCollection<Integer> collection) {
+		XArrayList<Integer> list1=(XArrayList<Integer>) collection;
+		
+		list1.add(5);
+		list1.add(4);
+		list1.add(3);
+		list1.add(2);
+		list1.add(1);
+		
 	}
 	
 }

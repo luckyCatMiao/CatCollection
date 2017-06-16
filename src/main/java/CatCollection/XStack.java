@@ -11,7 +11,7 @@ import CatCollection.Exception.UnsupportedFunctionException;
 public class XStack<T> extends FixCollection<T>{
 
 	
-	//内部使用list存储数据
+	//内部使用数组存储数据
 	private XArrayList<T> data;
 	
 	

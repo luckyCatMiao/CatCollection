@@ -6,10 +6,16 @@ import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.FixCollection;
 import CatCollection.Exception.UnsupportedFunctionException;
 
+/**
+ * 队列
+ * @author Administrator
+ *
+ * @param <T>
+ */
 public class XQuene<T> extends FixCollection<T> {
 
-	//内部使用list存储数据
-	private XArrayList<T> data;
+	//内部使用数组数据
+	protected XArrayList<T> data;
 		
 	
 	public XQuene() {

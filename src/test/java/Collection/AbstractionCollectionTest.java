@@ -1,10 +1,9 @@
 package Collection;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 import java.lang.reflect.Constructor;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,11 +14,10 @@ import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
 import CatCollection.Exception.NullValueException;
 import CatCollection.Exception.CollectionException.OnlyValueException;
-import CatCollection.Util.ArrayTool;
 
-public class AbstractionCollectionTest {
+public abstract class AbstractionCollectionTest extends FixCollectionTest {
 	
-	private AbstractCollection<Integer> collection1;
+	AbstractCollection<Integer> collection1;
 	private AbstractCollection<Integer> collection2;
 	
 	
@@ -37,11 +35,8 @@ public class AbstractionCollectionTest {
 		
 		collection1=(AbstractCollection<Integer>) constructor1.newInstance();
 		collection2=(AbstractCollection<Integer>) constructor2.newInstance(true,false);
-		collection1.add(5);
-		collection1.add(4);
-		collection1.add(3);
-		collection1.add(2);
-		collection1.add(1);
+		InitValue(collection1);
+		InitValue(collection2);
 	}
 	
 
@@ -93,53 +88,6 @@ public class AbstractionCollectionTest {
 		
 		assertEquals(0,collection1.clear().size() );
 		
-	}
-
-	@Test
-	public void testShallowClone() {
-	
-		
-		assertNotEquals(collection1, collection1.shallowClone());
-		
-	}
-
-	@Test
-	public void testDeepClone() {
-		
-		AbstractCollection<Integer> abstractList=(AbstractCollection<Integer>) collection1.deepClone().remove(5);
-	
-		assertEquals(5, collection1.size());
-		assertEquals(4, abstractList.size());	
-		assertNotEquals(collection1, abstractList);
-	}
-
-	@Test
-	public void testToArray() {
-		assertEquals("[5,4,3,2,1]",ArrayTool.toString(collection1.toArray(Integer.class),collection1.size()-1));
-	
-	
-		Integer[] integers=collection1.toArray(Integer.class);
-	
-	
-	}
-
-	
-	@Test
-	public void testStream() {
-		
-		String result = collection1.
-				deepClone().
-				clear().
-				addAll(collection1.stream().collect(Collectors.toList())).
-				toString();
-	
-		
-		assertEquals("[5,4,3,2,1]",result);
-	
-	
-	
-	
-	
 	}
 	
 }

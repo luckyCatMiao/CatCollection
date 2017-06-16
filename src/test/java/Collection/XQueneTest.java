@@ -8,10 +8,19 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Annotation.TestType;
 import CatCollection.XQuene;
 import CatCollection.XStack;
+import CatCollection.BaseCollection.FixCollection;
 
-public class XQueneTest {
+@TestType(Type = XQuene.class)
+public class XQueneTest extends FixCollectionTest{
+	
+	public XQueneTest() throws Exception {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	private XQuene<Integer> quene=new XQuene<>();
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -52,6 +61,23 @@ public class XQueneTest {
 	@Test
 	public void testPeak() {
 		assertEquals(5, quene.push(5).push(4).pop(),0);
+	}
+
+	@Override
+	protected void InitValue(FixCollection<Integer> collection) {
+	XQuene<Integer> list1=(XQuene<Integer>) collection;
+	
+	
+		list1.push(1);
+		list1.push(2);
+		list1.push(3);
+		list1.push(4);
+		list1.push(5);
+		
+		
+		
+		
+		
 	}
 
 }

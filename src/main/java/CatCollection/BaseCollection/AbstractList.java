@@ -157,12 +157,15 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 {
 		checkRange(index);
 		
-		return getRange(index, index).toOneValue();
+		return _realGet(index);
 		 
 		 
 	 }
 	
-	 /**
+	 protected abstract T _realGet(int index);
+
+
+	/**
 	  * 将只有一个值的list转换为那个值类型
 	  * @return
 	  */
@@ -172,13 +175,20 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		{
 			throw new CanNotConvertToOneValueException(size()+"");
 		}
-		return _realToOneValue();
+		return get(0);
 	}
 
 
 
-	protected abstract T _realToOneValue();
-	
+	public AbstractList<T> getRangeAndRemove(int startIndex, int endIndex) {
+		
+		
+		AbstractList<T> list=getRange(startIndex, endIndex);
+		removeRange(startIndex, endIndex);
+		
+		return list;
+		
+	}
 
 
 	/**
@@ -186,8 +196,17 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 * @param index
 	 * @return
 	 */
-	abstract public FixCollection<T> set(T value,int index);
+	public AbstractList<T> set(T value,int index)
+	{
+		checkRange(index);
+		 _realSet(value,index);
+		return this;
+	}
 	
+	abstract protected void _realSet(T value, int index);
+	
+
+
 	@Override
 	public Iterator<T> iterator() {
 		return new ListIterator<T>();
@@ -252,8 +271,29 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		return this;
 	}
 	
-	public abstract AbstractList<T> removeRange(int startIndex, int endIndex);
-	public abstract AbstractList<T> getRange(int startIndex, int endIndex);
+	public  AbstractList<T> removeRange(int startIndex, int endIndex)
+	{
+		AbstractList<T> list=NewInstance();
+		list.addAll(getRange(startIndex, endIndex));
+		for(T element:list)
+		{
+			remove(element);
+		}
+		
+		
+		return this;
+	}
+	
+	public AbstractList<T> getRange(int startIndex, int endIndex)
+	{
+		AbstractList<T> list=NewInstance();
+		for(int i=startIndex;i<=endIndex;i++)
+		{
+			list.add(get(i));
+		}
+		
+		return list;
+	}
 
 
 	/**

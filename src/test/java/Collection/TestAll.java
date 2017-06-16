@@ -12,8 +12,11 @@ import CatCollection.XQuene;
          SortTooltest.class,
          XArrayListTest.class,
          XQueneTest.class,
-         XStackTest.class
-        
+         XStackTest.class,
+         XPriorityQueneTest.class,
+         XLinkedListTest.class
+         
+         
          } )
  public   class  TestAll  {
  } 

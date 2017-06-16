@@ -1,9 +1,11 @@
 package CatCollection;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 import CatCollection.BaseCollection.AbstractList;
 import CatCollection.BaseCollection.FixCollection;
+
 
 /**
  * 链表(单向链表)
@@ -15,13 +17,45 @@ public class XLinkedList<T> extends AbstractList<T>{
 
 	
 	
+	/**
+	 *  抽象List基类里面的迭代实现是用的get 对于链表来说效率很低 这边重写一个迭代器
+	 * @author Administrator
+
+	 */
+	private class LinkedListIterator implements Iterator<T> {
+
+		private XLinkedList<T>.Point point;
+
+		public LinkedListIterator() {
+			
+			point=startPoint;
+			
+		}
+		
+		@Override
+		public boolean hasNext() {
 	
+			
+			return point!=null;
+		}
+
+		@Override
+		public T next() {
+			T value=point.value;
+			point=point.next;
+			
+			return value;
+			
+		}
+
+	}
+
 	/**
 	 * 链表节点类
 	 * @author Administrator
 	 *
 	 */
-	private class LinkPoint<T> implements Serializable
+	private class Point implements Serializable
 	{
 		/**
 		 * 值
@@ -30,11 +64,11 @@ public class XLinkedList<T> extends AbstractList<T>{
 		/**
 		 * 下一个节点
 		 */
-		public LinkPoint next;
+		public Point next;
 		/**
 		 * 上一个节点
 		 */
-		public LinkPoint last;
+		public Point last;
 		@Override
 		public String toString() {
 			return "LinkPoint [" + (value != null ? "value=" + value : "") + "]";
@@ -45,12 +79,22 @@ public class XLinkedList<T> extends AbstractList<T>{
 		
 	}
 
+	@Override
+	/**
+	 * 抽象List基类里面的迭代实现是用的get 对于链表来说效率很低 这边重写一个迭代器
+	 */
+	public Iterator<T> iterator() {
+		return new LinkedListIterator();
+		
+	}
+	
 	
 	
 	/**
 	 * 起始点
 	 */
-	private LinkPoint<T> startPoint;
+	private Point startPoint;
+	
 	
 	private int size=0;
 	
@@ -59,6 +103,11 @@ public class XLinkedList<T> extends AbstractList<T>{
 		
 	}
 
+	/**
+	 * 
+	 * @param flag_onlyValue
+	 * @param flag_canNull
+	 */
 	public XLinkedList(boolean flag_onlyValue, boolean flag_canNull) {
 		super(flag_onlyValue, flag_canNull);
 		// TODO Auto-generated constructor stub
@@ -70,7 +119,7 @@ public class XLinkedList<T> extends AbstractList<T>{
 	protected void _realRemove(T value) {
 		
 		 //查找到该点
-		LinkPoint<T> point=getPointByValue(value);
+		Point point=getPointByValue(value);
 		if(point!=null)
 		{	
 			if(point.equals(startPoint))
@@ -79,8 +128,9 @@ public class XLinkedList<T> extends AbstractList<T>{
 			}
 			else
 			{
-				LinkPoint<T> lastPoint=point.last;
-				LinkPoint<T> nextPoint=point.next;
+				
+				Point lastPoint=point.last;
+				Point nextPoint=point.next;
 				LinkPoint(lastPoint, nextPoint);
 			}
 			
@@ -95,7 +145,7 @@ public class XLinkedList<T> extends AbstractList<T>{
 	 * @param lastPoint
 	 * @param nextPoint
 	 */
-	private void LinkPoint(LinkPoint<T> lastPoint, LinkPoint<T> nextPoint) {
+	private void LinkPoint(Point lastPoint, Point nextPoint) {
 		//该点的上一个点引用到该点的下一个点
 		if(lastPoint!=null)
 		{
@@ -110,8 +160,8 @@ public class XLinkedList<T> extends AbstractList<T>{
 	
 	
 
-	private XLinkedList<T>.LinkPoint<T> getPointByValue(T value) {
-		LinkPoint<T> nowPoint=startPoint;
+	private XLinkedList<T>.Point getPointByValue(T value) {
+		Point nowPoint=startPoint;
 		while(nowPoint!=null)
 		{
 			if(nowPoint.value.equals(value))
@@ -128,16 +178,16 @@ public class XLinkedList<T> extends AbstractList<T>{
 	protected void _realAdd(T value) {
 		if(startPoint==null)
 		{
-			startPoint=new LinkPoint<>();
+			startPoint=new Point();
 			startPoint.value=value;
 		}
 		else
 		{
 			//插入最后一个点的后面
-			LinkPoint<T> point=new LinkPoint<>();
+			Point point=new Point();
 			point.value=value;
 			
-			LinkPoint<T> endPoint=getPoint(size()-1);
+			Point endPoint=getPoint(size()-1);
 			LinkPoint(endPoint, point);
 			
 			
@@ -152,13 +202,13 @@ public class XLinkedList<T> extends AbstractList<T>{
 	 * @param index
 	 * @return
 	 */
-	private XLinkedList<T>.LinkPoint<T> getPoint(int index) 
+	private XLinkedList<T>.Point getPoint(int index) 
 	{
 		
 		checkRange(index);
 		int i=0;
 		
-		LinkPoint<T> nowPoint=startPoint;
+		Point nowPoint=startPoint;
 		while(nowPoint!=null)
 		{
 			if(i==index)
@@ -192,6 +242,8 @@ public class XLinkedList<T> extends AbstractList<T>{
 		
 		getPoint(index).value=value;
 	}
+	
+	
 	
 	
 

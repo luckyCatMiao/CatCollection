@@ -325,14 +325,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		return list;
 	}
 	
-	/**
-	 * 父类使用遍历法 但是list可以使用二分查找 所以覆盖
-	 */
-	public boolean contain(T value)
-	{
-		return indexOf(value)!=-1;
-	}
-
+	
 	
 	
 	

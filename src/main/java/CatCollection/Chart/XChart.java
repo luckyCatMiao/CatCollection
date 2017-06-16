@@ -2,7 +2,9 @@ package CatCollection.Chart;
 
 import java.util.LinkedList;
 
+import CatCollection.XArrayList;
 import CatCollection.XLinkedList;
+import CatCollection.XStack;
 import CatCollection.Chart.Exception.NotContainChartNodeException;
 import CatCollection.Exception.NullValueException;
 
@@ -11,7 +13,7 @@ import CatCollection.Exception.NullValueException;
  * @author Administrator
  *
  */
-public class Chart<T> {
+public class XChart<T> {
 
 	private class ChartNode
 	{
@@ -26,6 +28,22 @@ public class Chart<T> {
 			linkedNodes.forEach(a->string.append(a.value+" "));
 			
 			return value+":"+string.toString();
+		}
+
+		/**
+		 * 只返回T值
+		 * @return
+		 */
+		public XLinkedList<T> toValueLinkedList() {
+			XLinkedList<T> linkedList=new XLinkedList<>();
+			for(ChartNode node:linkedNodes)
+			{
+				linkedList.add(node.value);
+			}
+			
+			
+			
+			return linkedList;
 		}
 		
 		
@@ -44,7 +62,7 @@ public class Chart<T> {
 	 * @param twoDirection
 	 * @return
 	 */
-	public Chart<T> linkNode(T value1,T value2,Boolean twoDirection)
+	public XChart<T> linkNode(T value1,T value2,Boolean twoDirection)
 	{
 		ChartNode node1=CheckContainNode(value1);
 		ChartNode node2=CheckContainNode(value2);
@@ -85,7 +103,7 @@ public class Chart<T> {
 		
 	}
 
-	public Chart<T> addNode(T value)
+	public XChart<T> addNode(T value)
 	{
 		ChartNode node=new ChartNode();
 		node.value=value;
@@ -116,5 +134,29 @@ public class Chart<T> {
 
 	}
 
+	
+	public XStack<T> Search(T startPoint,T endPoint)
+	{
+		
+		CheckContainNode(startPoint);
+		CheckContainNode(endPoint);
+		
+		return ChartTool.DFSSearch(this, startPoint, endPoint);
+	}
+
+	public XLinkedList<T> getLinkedPoint(T value) {
+		CheckContainNode(value);
+		
+		
+		for(ChartNode node:linkedList)
+		{
+			if(node.value.equals(value))
+			{
+				return node.toValueLinkedList();
+			}
+		}
+		
+		return null;
+	}
 	
 }

@@ -301,21 +301,21 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	/**
 	 * 分割出子列表
 	 * @param startIndex
-	 * @param endIndex
+	 * @param toIndex
 	 * @return
 	 */
-	public FixCollection<T> subList(int startIndex,int endIndex)
+	public AbstractList<T> subList(int startIndex,int toIndex)
 	{
 		//实例化当前的子类 因为该类是抽象类不能实例化
-		AbstractCollection<T> list=NewInstance();
+		AbstractList<T> list=NewInstance();
 	
 		checkRange(startIndex);
-		checkRange(endIndex);
-		if(startIndex<=endIndex)
+		checkRange(toIndex-1);
+		if(startIndex<=toIndex)
 		{
 			
 			
-			for(int i=startIndex;i<endIndex;i++)
+			for(int i=startIndex;i<toIndex;i++)
 			{
 				list.add(get(i));
 			}

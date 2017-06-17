@@ -45,4 +45,12 @@ public class SortTooltest {
 		assertEquals("[1,2,3,4,5]", SortTool.InsertSort(list1, (a,b)->a-b).toString());
 	}
 	
+	
+	@Test
+	public void testMergeSort()
+	{
+		assertEquals("[1,2,3,4,5]", SortTool.MergeSort(list1, (a,b)->a-b).toString());
+	}
+	
+	
 }

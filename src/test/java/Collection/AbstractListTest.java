@@ -150,6 +150,13 @@ public abstract class AbstractListTest extends AbstractionCollectionTest {
 	
 		assertEquals(5,list1.remove(7).size());
 	
+	
 	}
 	
+	@Test
+	public void testShallowClone() {
+		assertEquals(6,list1.shallowClone().add(5).size());
+		
+		assertEquals(5,list1.size());
+	}
 }

@@ -14,8 +14,8 @@ import CatCollection.XQuene;
          XQueneTest.class,
          XStackTest.class,
          XPriorityQueneTest.class,
-         XLinkedListTest.class
-         
+         XLinkedListTest.class,
+         ChartToolTest.class
          
          } )
  public   class  TestAll  {

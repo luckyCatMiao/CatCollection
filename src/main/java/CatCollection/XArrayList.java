@@ -6,6 +6,7 @@ import java.util.Comparator;
 
 import org.junit.experimental.theories.DataPoint;
 
+import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
 import CatCollection.BaseCollection.FixCollection;
 import CatCollection.Util.ArrayTool;
@@ -162,8 +163,7 @@ public class XArrayList<T> extends AbstractList<T> {
 
 
 
-
-
+	
 	
 
 	

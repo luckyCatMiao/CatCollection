@@ -59,4 +59,15 @@ public class XStack<T> extends FixCollection<T>{
 	
 	
 
+	@Override
+	public XStack<T> shallowClone() {
+		XStack<T> stack=new XStack<>();
+		for(T element:this)
+		{
+			stack.push(element);
+		}
+		
+		
+		return stack;
+	}
 }

@@ -1,5 +1,7 @@
 package CatCollection.BaseCollection;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -343,7 +345,22 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		return list;
 	}
 
-	
+	private AbstractList<T> NewInstance(boolean flag_onlyValue, boolean flag_canNull) {
+		Class<? extends AbstractList> class1=this.getClass();
+			
+		AbstractList<T> list = null;
+			try {
+				Constructor<? extends AbstractList> constructor=class1.getConstructor(boolean.class,boolean.class);
+				
+				list = constructor.newInstance(flag_onlyValue,flag_canNull);
+			} catch (InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return list;
+		}
+
 	
 
 	public AbstractList<T> reverse()
@@ -378,6 +395,20 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		
 	}
 	
+	@Override
+	public AbstractList<T> shallowClone() {
+	
+		AbstractList<T> list=NewInstance(flag_onlyValue, flag_canNull);
+		list.setComparator(comparator);
+		for(T elemnt:this)
+		{
+			list.add(elemnt);
+		}
+		
+		
+		
+		return list;
+	}
 	
 	
 }

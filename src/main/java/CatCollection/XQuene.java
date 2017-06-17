@@ -69,5 +69,17 @@ public class XQuene<T> extends FixCollection<T> {
 	}
 	
 	
+	@Override
+	public XQuene<T> shallowClone() {
+		XQuene<T> quene=new XQuene<>();
+		for(T element:this)
+		{
+			quene.push(element);
+		}
+		
+		
+		return quene;
+	}
+	
 	
 }

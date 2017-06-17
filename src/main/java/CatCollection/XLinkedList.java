@@ -3,6 +3,7 @@ package CatCollection;
 import java.io.Serializable;
 import java.util.Iterator;
 
+import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
 import CatCollection.BaseCollection.FixCollection;
 

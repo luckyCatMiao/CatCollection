@@ -54,26 +54,18 @@ abstract public class FixCollection<T> implements MIterable<T>,Cloneable,Seriali
 	  }
 	
 	
+
 	/**
-	 * 浅克隆
+	 * object.clone虽然让collection!=collection2 但是因为collection内部都用
+	 * 引用变量(如数组)来保存元素 所以两者其实还是指向同一堆元素 
+	 * 需要子类覆盖
+	 * @param class1
 	 * @return
 	 */
-	public FixCollection<T> shallowClone() {
+	abstract public FixCollection<T> shallowClone();
 		
-		return shallowClone(this.getClass());
-	}
-	
-	
-	public <E extends FixCollection<T>> E shallowClone(Class<E> class1) {
-		
-		try {
-			return   (E) super.clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
+
+
 
 	/**
 	 * 深克隆 使用序列化	

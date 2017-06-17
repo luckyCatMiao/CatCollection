@@ -1,6 +1,8 @@
 package CatCollection.Chart;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Stack;
 
 import CatCollection.XArrayList;
 import CatCollection.XLinkedList;
@@ -100,5 +102,67 @@ public class ChartTool {
 		}
 		
 		return null;
+	}
+
+	
+	/**
+	 * 广度优先搜索
+	 * @param <T>
+	 * @param chart
+
+	 * @return
+	 */
+	public static <T> XStack<T> BFSSearch(XChart<T> chart,T startPoint,T endPoint) {
+		
+
+				//保存当前的路径组
+				XLinkedList<XStack<T>> nowPaths=new XLinkedList<>();
+			
+				//将初始节点压入一条初始路径			
+				nowPaths.add((XStack<T>) new XStack<>().push(startPoint));
+			
+				
+				out:while(true)
+				{
+					//新的路径组 
+					XLinkedList<XStack<T>> newPaths=new XLinkedList<>();
+					
+					//获取当前的路径
+					for(XStack<T> path:nowPaths)
+					{
+						//获取当前路径头节点的连接节点
+						XLinkedList<T> linkedPoints=chart.getLinkedPoint(path.peak());
+						
+						
+						//如果节点包含结束节点
+						if(linkedPoints.contain(endPoint))
+						{
+							path.push(endPoint);
+							return path;
+						}
+						else
+						{
+							for(T point:linkedPoints)
+							{
+								//创建新路径并添加到新路径组
+								XStack<T> newPath=path.shallowClone().push(point);
+								newPaths.add(newPath);
+							}
+						}
+						
+	
+						}
+					
+					//没有可拓展的新节点 返回Null
+					if(newPaths.isEmpty())
+					{
+						
+						return null;
+					}
+					
+					//将拓展节点组替换为新的
+					nowPaths=newPaths;
+					
+				}
 	}
 }

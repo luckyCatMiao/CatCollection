@@ -1,6 +1,9 @@
+import CatCollection.XArrayList;
 import CatCollection.XLinkedList;
+import CatCollection.XStack;
 import CatCollection.Chart.ChartTool;
 import CatCollection.Chart.XChart;
+import Collection.ChartToolTest;
 
 public class Main {
 
@@ -19,22 +22,35 @@ public class Main {
 //		}
 		
 		
-		XChart<Integer> chart=new XChart<>();
-		chart.addNode(1).addNode(2).addNode(3).addNode(4).addNode(5);
-		chart.linkNode(1, 2, false);
-		chart.linkNode(1, 3, false);
-		chart.linkNode(2, 3, true);
-		chart.linkNode(1, 4, false);
-		chart.linkNode(4, 5, false);
-		chart.linkNode(5, 2, false);
-		
 		
 		//System.out.println(chart);
-		System.out.println(chart.Search(1, 5));
+	//	System.out.println(chart.Search(1, 5));
 		
 		
 		//XLinkedList<Integer> linkedList=new XLinkedList<>();
 		//System.out.println(ChartTool.GetUnVisitedLinkPoint(1, (XLinkedList<Integer>)linkedList.add(2).add(3), chart));
 		
+//		ChartToolTest test=new ChartToolTest();
+//		test.setUP();
+//		
+//		test.testBFS();
+		
+		
+		XStack<Integer> newPath=new XStack<>();
+		newPath.push(1);
+		XStack<Integer> newPath2=newPath.shallowClone();
+		newPath2.push(2);
+		System.out.println(newPath2);
+		System.out.println(newPath);
+		
+		
+		XArrayList<Integer> newPath3=new XArrayList<>();
+		newPath3.add(1);
+		newPath3.add(2);
+		XArrayList<Integer> newPath4=(XArrayList<Integer>) newPath3.shallowClone();
+		newPath4.add(2);
+		System.out.println(newPath3);
+		System.out.println(newPath4);
+	
 	}
 }

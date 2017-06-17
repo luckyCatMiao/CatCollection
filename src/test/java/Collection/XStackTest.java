@@ -100,4 +100,10 @@ public class XStackTest extends FixCollectionTest{
 		
 	}
 
+	public void testShallowClone() {
+		assertEquals("[5,4,3,2,1,5]", stack.shallowClone().push(5).toString());
+		assertEquals("[5,4,3,2,1]", stack.toString());
+	}
+
+	
 }

@@ -109,7 +109,7 @@ public abstract class AbstractListTest extends AbstractionCollectionTest {
 	@Test
 	public void testSet() {
 		
-		assertEquals("[6,4,3,2,1]", list1.set(6, 0).toString());
+		assertEquals("[6,4,3,2,1]", list1.set(0, 6).toString());
 	}
 	
 	

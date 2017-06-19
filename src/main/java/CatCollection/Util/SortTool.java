@@ -31,8 +31,8 @@ public class SortTool {
 				   T valueRight=list.get(q+1);
 				   if(comparator.compare(valueLeft, valueRight)>0)
 				   {
-					  list.set(valueLeft, q+1);
-					   list.set(valueRight, q);
+					  list.set(q+1, valueLeft);
+					   list.set(q, valueRight);
 				   }
 				  
 				   
@@ -72,8 +72,8 @@ public class SortTool {
 		   
 		   //将最大的数与未排序的最右边交换
 		   T cache=list.get(size-i-1);
-		   list.set(maxValue, size-i-1);
-		   list.set(cache, maxValueIndex);
+		   list.set(size-i-1, maxValue);
+		   list.set(maxValueIndex, cache);
 		   
 	   }   
 		
@@ -106,7 +106,7 @@ public class SortTool {
 					list.removeRange(i, i);
 					//System.arraycopy(list, a, list, a+1, i-a);
 					list.add(cache,a);
-					list.set(cache, a);
+					list.set(a, cache);
 					break;
 				}
 				
@@ -223,4 +223,158 @@ public class SortTool {
 		
 		return result;
 	}
+
+	/**
+	 * 希尔排序
+	 * @param comparator
+	 * @return
+	 */
+	public static <T> AbstractList<T>  ShellSort(AbstractList<T> list, Comparator<T> comparator) {
+		//根据数组size获取初始增量
+		int Incremental=1;
+		while(3*Incremental+1<list.size())
+		{
+			Incremental=3*Incremental+1;
+		}
+		
+		
+		
+		while(Incremental>=1)
+		{
+			//执行带有增量的插入排序(这里的插入排序一定要从右往左来查找合适的位置)
+			
+			
+			
+		
+		//当前需要进行几次这样的增量插入排序
+		for(int i=0;i<Incremental;i++)
+		{
+			for(int out=Incremental+i;out<list.size();out+=Incremental)
+			{	
+
+				int index=out;
+				T cache=list.get(out);
+				//为该值寻找合适的位置
+				
+				//貌似for是先执行最右边的计算,再执行中间的判断..
+				for(int in=out-Incremental;in>=0;in-=Incremental)
+				{
+					//因为这里是增量没法用arraycopy native方法来加速了 只能是一个一个交换
+					
+					//小的都往右移动
+					if(comparator.compare(cache, list.get(in))<0)
+					{
+						
+						list.set(in+Incremental, list.get(in));
+						index-=Incremental;
+						
+					}
+					
+				}
+				//插入到最终的位置
+				
+					list.set(index,cache );
+				
+				
+				
+			}
+		}	
+			//减少增量
+			Incremental=(Incremental-1)/3;
+		}
+		
+		
+		
+		
+		return list;
+	
+	}
+
+	/**
+	 * 快速排序
+	 * @param list
+	 * @param comparator
+	 * @return
+	 */
+	public static <T> AbstractList<T> QuickSort(AbstractList<T> list, Comparator<T> comparator) {
+		
+		//这里突然发现我自己的框架里的list.subList实现的和java不一样,我是做了浅复制
+		//java是直接指向数据源...浅复制都不算 意思是subList.add之后原list也add了
+		
+		//所以没法用subList来写了 自己自己标上要处理的范围
+		list=_QuickSort(list,comparator,0,list.size());
+		
+		return list;
+	}
+
+	private static <T> AbstractList<T> _QuickSort(AbstractList<T> list, Comparator<T> comparator, int startIndex, int toIndex) {
+		if(toIndex-startIndex==1)
+		{
+			return list;
+		}
+		//快排
+		//对自己进行划分
+		int center=HuaFen(list,comparator,startIndex,toIndex);
+		//对划分结束的左右子数组再次划分
+		_QuickSort(list,comparator,startIndex,center);
+		_QuickSort(list,comparator,center,toIndex);
+		
+		
+		return list;
+	}
+
+	/**
+	 * 划分数组(快排的一部分)
+	 * @param <T>
+	 * @param is
+	 * @return
+	 */
+	private static <T> int HuaFen(AbstractList<T> is, Comparator<T> comparator, int startIndex, int toIndex) {
+		
+		
+		//选取一个项作为中间值(这里选取最右边的)
+		T centerValue=is.get(toIndex-1);
+		
+		//两个指针指向list开头和结尾(不算入中间值的位置)
+		int leftIndex=startIndex;
+		int rightIndex=toIndex-1;
+		while(true)
+		{
+			
+			//从左往右递增左指针找到一个大于等于中间值的值
+			while(leftIndex<rightIndex&&comparator.compare(is.get(leftIndex), centerValue)<=0)
+			{
+				leftIndex++;
+			}
+			
+			//从右往左递减左指针找到一个小于中间值的值
+			while(rightIndex>leftIndex&&comparator.compare(is.get(rightIndex),centerValue)>0)
+			{
+				rightIndex--;
+			}
+			
+			//进行一次交换(如果leftIndex>rightIndex 则说明在交汇点的左右两边已经划分完毕)
+		
+			if(leftIndex<rightIndex)
+			{
+				T cache=is.get(leftIndex);
+				is.set(leftIndex, is.get(rightIndex));
+				is.set(rightIndex, cache);
+
+//记得很久以前写的时候写了下面的 然后又写了其他一堆乱七八糟的东西 现在想想这里根本不用写
+//下一轮循环的时候回自动判断掉	所以其他七七八八的判断也不用写了
+//				leftIndex++;
+//				rightIndex--;
+				
+			}
+			else
+			{
+				break;
+			}
+	
+		}	
+		return leftIndex;
+	}
+	
+	
 }

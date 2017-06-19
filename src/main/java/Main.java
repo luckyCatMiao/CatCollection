@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import CatCollection.XArrayList;
 import CatCollection.XLinkedList;
 import CatCollection.XStack;
@@ -36,21 +40,31 @@ public class Main {
 //		test.testBFS();
 		
 		
-		XStack<Integer> newPath=new XStack<>();
-		newPath.push(1);
-		XStack<Integer> newPath2=newPath.shallowClone();
-		newPath2.push(2);
-		System.out.println(newPath2);
-		System.out.println(newPath);
-		
-		
-		XArrayList<Integer> newPath3=new XArrayList<>();
-		newPath3.add(1);
-		newPath3.add(2);
-		XArrayList<Integer> newPath4=(XArrayList<Integer>) newPath3.shallowClone();
-		newPath4.add(2);
-		System.out.println(newPath3);
-		System.out.println(newPath4);
+//		XStack<Integer> newPath=new XStack<>();
+//		newPath.push(1);
+//		XStack<Integer> newPath2=newPath.shallowClone();
+//		newPath2.push(2);
+//		System.out.println(newPath2);
+//		System.out.println(newPath);
+//		
+//		
+//		XArrayList<Integer> newPath3=new XArrayList<>();
+//		newPath3.add(1);
+//		newPath3.add(2);
+//		XArrayList<Integer> newPath4=(XArrayList<Integer>) newPath3.shallowClone();
+//		newPath4.add(2);
+//		System.out.println(newPath3);
+//		System.out.println(newPath4);
 	
+		
+		
+//		ArrayList<Integer> list=new ArrayList<>(Arrays.asList(1,2,3,4));
+//		List<Integer> list2=list.subList(0, 2);
+//		list2.add(5);
+//		System.out.println(list);
+		
+		
+		
+		
 	}
 }

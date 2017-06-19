@@ -198,7 +198,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 * @param index
 	 * @return
 	 */
-	public AbstractList<T> set(T value,int index)
+	public AbstractList<T> set(int index,T value)
 	{
 		checkRange(index);
 		 _realSet(value,index);
@@ -237,7 +237,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 			
 			for(int i=0;i<objects.length;i++)
 			{
-				set((T) objects[i], i);
+				set(i, (T) objects[i]);
 			}
 		}
 	}

@@ -52,5 +52,16 @@ public class SortTooltest {
 		assertEquals("[1,2,3,4,5]", SortTool.MergeSort(list1, (a,b)->a-b).toString());
 	}
 	
+	@Test
+	public void testShellSort()
+	{
+		assertEquals("[1,2,3,4,5]", SortTool.ShellSort(list1, (a,b)->a-b).toString());
+	}
+	
+	@Test
+	public void testQuickSort()
+	{
+		assertEquals("[1,2,3,4,5]", SortTool.QuickSort(list1, (a,b)->a-b).toString());
+	}
 	
 }

@@ -52,6 +52,21 @@ public class XChart<T> extends FixCollection<T>{
 		}
 		
 		
+		@Override
+		public boolean equals(Object obj) {
+			
+			if(obj.getClass()== ChartNode.class)
+			{
+				ChartNode node=(XChart<T>.ChartNode) obj;
+				return node.value==this.value;
+			}
+			else
+			{
+				return obj==this;
+			}
+			
+			
+		}
 	}
 	
 	

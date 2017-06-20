@@ -2,7 +2,7 @@ package CatCollection.Tree;
 
 import java.util.Iterator;
 
-import CatCollection.BaseCollection.AbstractCollection;
+import CatCollection.XStack;
 import CatCollection.BaseCollection.FixCollection;
 import CatCollection.Chart.XChart;
 
@@ -11,7 +11,7 @@ import CatCollection.Chart.XChart;
  * @author Administrator
  *
  */
-public class XTree<T> extends AbstractCollection<T>{
+public class XTree<T> extends FixCollection<T>{
 	
 	
 
@@ -19,56 +19,48 @@ public class XTree<T> extends AbstractCollection<T>{
 	private T root;
 	private XChart<T> chart;
 
+	
+	/**
+	 * 树强制不能输入空值和重复值 一旦可以输入 就要进行多余的判断 完全失去了树的性能优势
+	 *因此强制不能插入空值和重复值
+	 */
 	public XTree() {
 
-		chart=new XChart<>();
+		
+		chart=new XChart<>(true,false);
 	};
 	
-	public XTree(boolean flag_onlyValue,boolean flag_canNull) {
-
-		super(flag_onlyValue,flag_canNull);
-		chart=new XChart<>(flag_onlyValue,flag_canNull);
-
-	}
-
+	
+	
 	@Override
 	public Iterator<T> iterator() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void _realRemove(T value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void _realAdd(T flagTest) {
-		// TODO Auto-generated method stub
-		
+		return chart.iterator();
 	}
 
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return 0;
+		return chart.size();
 	}
 
 	@Override
-	public FixCollection<T> shallowClone() {
+	public XTree<T> shallowClone() {
 		// TODO Auto-generated method stub
 		return null;
-	};
+	}
 	
-	public XTree<T> addNode(T root) {
-		if(root==null)
+
+	public XTree<T> addNode(T value,T root) {
+		if(this.root==null)
 		{
-			this.root=root;
+			this.root=value;
+			chart.addNode(value);
 		}
 		else
 		{
-			
+			chart.addNode(value);
+			chart.linkNode(root, value, false);
 		}
 		
 		return this;
@@ -86,8 +78,60 @@ public class XTree<T> extends AbstractCollection<T>{
 	 * @return
 	 */
 	public String toImageString() {
-		// TODO Auto-generated method stub
-		return null;
+		
+
+		return getNodeString(root);
+	}
+
+	/**
+	 * 递归方法 获取当前节点构成的子树的字符串描述
+	 * @param node
+	 * @return
+	 */
+	private String getNodeString(T node) {
+	
+		if(node==null)
+		{
+			return "";
+		}
+		
+	
+		
+		StringBuffer stringBuffer=new StringBuffer();
+		//使用类似深度优先搜索的方法遍历树
+		
+		XStack<T> stack=new XStack<>();
+		stack.push(node);
+		while(true)
+		{
+			XStack<T> stack2=new XStack<>();
+			//输出当前层
+			while(!stack.isEmpty())
+			{
+				T value=stack.pop();
+				//貌似用图的特例来实现有点低效..因为我把图封装的太好了..
+				//到时候把图的内部用哈希表来存储节点可能会好一些
+				stringBuffer.append(value+" ");
+				for(T child:chart.getLinkedPoint(value))
+				{
+					stack2.push(child);
+				}
+			}
+			stringBuffer.append("\n");
+			//进行交换
+			if(!stack2.isEmpty())
+			{
+				stack=stack2;
+			}
+			else
+			{
+				break;
+			}
+			
+		}
+		
+		
+		return stringBuffer.toString();
 	}
 	
 

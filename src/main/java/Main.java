@@ -7,6 +7,7 @@ import CatCollection.XLinkedList;
 import CatCollection.XStack;
 import CatCollection.Chart.ChartTool;
 import CatCollection.Chart.XChart;
+import CatCollection.Tree.XTree;
 import Collection.ChartToolTest;
 
 public class Main {
@@ -64,7 +65,18 @@ public class Main {
 //		System.out.println(list);
 		
 		
+
+		XTree<Integer> tree1=new XTree<>();
+		tree1.addNode(3,null);
 		
+		tree1.addNode(2, 3);
+		tree1.addNode(1, 3);
+		
+		tree1.addNode(4, 2);
+		tree1.addNode(6, 2);
+		
+		tree1.addNode(3, 1);
+		tree1.addNode(7, 1);
 		
 	}
 }

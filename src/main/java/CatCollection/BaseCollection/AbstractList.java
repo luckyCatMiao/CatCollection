@@ -54,7 +54,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	
 	public AbstractList()
 	{
-		
+		super();
 	}
 	
 	/**
@@ -257,7 +257,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 * @param index
 	 * @return
 	 */
-	public FixCollection<T> add(T value,int index) {
+	public AbstractList<T> add(T value,int index) {
 		checkRange(index);
 		if(getComparator()!=null)
 		{
@@ -265,18 +265,21 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		}
 		else
 		{
-			AbstractCollection<T> abstractList=getRange(index,size()-1);
-			removeRange(index, size()-1);
+			AbstractCollection<T> abstractList=getRange(index,size());
+			removeRange(index, size());
 			add(value);
 			addAll(abstractList.toArray(Object.class));
 		}
 		return this;
 	}
 	
-	public  AbstractList<T> removeRange(int startIndex, int endIndex)
+	public  AbstractList<T> removeRange(int startIndex, int toIndex)
 	{
+		checkRange(startIndex);
+		checkRange(toIndex-1);
 		AbstractList<T> list=NewInstance();
-		list.addAll(getRange(startIndex, endIndex));
+		list.addAll(getRange(startIndex, toIndex));
+		
 		for(T element:list)
 		{
 			remove(element);
@@ -286,10 +289,12 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		return this;
 	}
 	
-	public AbstractList<T> getRange(int startIndex, int endIndex)
+	public AbstractList<T> getRange(int startIndex, int toIndex)
 	{
+		checkRange(startIndex);
+		checkRange(toIndex-1);
 		AbstractList<T> list=NewInstance();
-		for(int i=startIndex;i<=endIndex;i++)
+		for(int i=startIndex;i<toIndex;i++)
 		{
 			list.add(get(i));
 		}
@@ -408,6 +413,14 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		
 		
 		return list;
+	}
+
+
+	public AbstractList<T> removeAt(int index) {
+		removeRange(index, index+1);
+		
+		return this;
+		
 	}
 	
 	

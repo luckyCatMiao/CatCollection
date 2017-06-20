@@ -48,7 +48,7 @@ public class XPriorityQueneTest{
 		quene.push(10);
 		quene.push(3);
 		quene.push(0);
-		assertEquals("[0,3,5,10]", ArrayTool.toString(quene.toArray(Integer.class),3));
+		assertEquals("[0,3,5,10]", ArrayTool.toString(quene.toArray(Integer.class)));
 		
 		
 	}

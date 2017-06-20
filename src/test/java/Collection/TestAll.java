@@ -5,6 +5,7 @@ package Collection;
 
 import CatCollection.XArrayList;
 import CatCollection.XQuene;
+import CatCollection.Tree.XTreeList;
 
  @RunWith(Suite. class )
  @Suite.SuiteClasses( {
@@ -15,7 +16,9 @@ import CatCollection.XQuene;
          XStackTest.class,
          XPriorityQueneTest.class,
          XLinkedListTest.class,
-         ChartToolTest.class
+         ChartToolTest.class,
+         XChartTest.class,
+         XTreeList.class
          
          } )
  public   class  TestAll  {

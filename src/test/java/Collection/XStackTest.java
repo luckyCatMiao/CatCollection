@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import Annotation.TestType;
 import CatCollection.XArrayList;
+import CatCollection.XQuene;
 import CatCollection.XStack;
 import CatCollection.BaseCollection.AbstractList;
 import CatCollection.BaseCollection.FixCollection;
@@ -105,5 +106,12 @@ public class XStackTest extends FixCollectionTest{
 		assertEquals("[5,4,3,2,1]", stack.toString());
 	}
 
+	@Override
+	public void addValue(FixCollection<Integer> collection, int value) {
+		XStack<Integer> stack=(XStack<Integer>) collection;
+		stack.push(value);
+		
+	}
+	
 	
 }

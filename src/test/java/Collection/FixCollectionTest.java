@@ -62,9 +62,15 @@ public abstract class FixCollectionTest {
 	public void testShallowClone() {
 	
 		
-		assertNotEquals(collection1, collection1.shallowClone());
-		
+		FixCollection<Integer> collection2=collection1.shallowClone();
+		assertNotEquals(collection1, collection2);
+		addValue(collection2,7);
+		assertEquals("[5,4,3,2,1]",ArrayTool.toString(collection1.toArray(Integer.class),collection1.size()));
+		assertEquals("[5,4,3,2,1,7]",ArrayTool.toString(collection2.toArray(Integer.class)));
 	}
+
+	public abstract void addValue(FixCollection<Integer> collection22, int i);
+	
 
 	@Test
 	public void testDeepClone() {
@@ -77,7 +83,7 @@ public abstract class FixCollectionTest {
 
 	@Test
 	public void testToArray() {
-		assertEquals("[5,4,3,2,1]",ArrayTool.toString(collection1.toArray(Integer.class),collection1.size()-1));
+		assertEquals("[5,4,3,2,1]",ArrayTool.toString(collection1.toArray(Integer.class),collection1.size()));
 	
 	}
 	

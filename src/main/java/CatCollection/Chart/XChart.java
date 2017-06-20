@@ -1,10 +1,14 @@
 package CatCollection.Chart;
 
+import java.io.Serializable;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import CatCollection.XArrayList;
 import CatCollection.XLinkedList;
 import CatCollection.XStack;
+import CatCollection.Annotation.CollectionFlag;
+import CatCollection.BaseCollection.FixCollection;
 import CatCollection.Chart.Exception.NotContainChartNodeException;
 import CatCollection.Exception.NullValueException;
 
@@ -13,9 +17,10 @@ import CatCollection.Exception.NullValueException;
  * @author Administrator
  *
  */
-public class XChart<T> {
+public class XChart<T> extends FixCollection<T>{
 
-	private class ChartNode
+	
+	private class ChartNode implements Serializable
 	{
 		public T value;
 		
@@ -48,6 +53,29 @@ public class XChart<T> {
 		
 		
 	}
+	
+	
+	/**
+	 * 集合内的值是否可以重复
+	 */
+	@CollectionFlag
+	protected boolean flag_onlyValue=false;
+	/**
+	 * 是否接受null值
+	 */
+	@CollectionFlag
+	protected boolean flag_canNull=true;
+	
+	
+	public XChart() {
+		linkedList=new XLinkedList<>();
+	}
+	public XChart(boolean flag_onlyValue, boolean flag_canNull) {
+		
+		super(flag_onlyValue,flag_canNull);
+		linkedList=new XLinkedList<>(flag_onlyValue,flag_canNull);
+	}
+	
 	
 	
 	/**
@@ -157,6 +185,36 @@ public class XChart<T> {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		
+		XArrayList<T> list = getValueList();
+		
+		return list.iterator();
+	}
+
+	private XArrayList<T> getValueList() {
+		XArrayList<T> list=new XArrayList<>();
+		
+		for(ChartNode n:linkedList)
+		{
+			list.add(n.value);
+		}
+		return list;
+	}
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return linkedList.size();
+	}
+
+	@Override
+	public FixCollection<T> shallowClone() {
+		
+		throw new UnsupportedOperationException();
 	}
 	
 }

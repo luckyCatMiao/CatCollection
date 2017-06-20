@@ -121,7 +121,7 @@ public abstract class AbstractListTest extends AbstractionCollectionTest {
 
 	@Test
 	public void testRemoveRange() {
-		assertEquals("[3,2,1]", list1.removeRange(0, 1).toString());
+		assertEquals("[3,2,1]", list1.removeRange(0, 2).toString());
 	}
 	
 	@Test
@@ -134,7 +134,7 @@ public abstract class AbstractListTest extends AbstractionCollectionTest {
 	
 	@Test
 	public void testgetRange() {
-		assertEquals("[5,4,3]", list1.getRange(0, 2).toString());
+		assertEquals("[5,4]", list1.getRange(0, 2).toString());
 	}
 	
 	@Test
@@ -158,5 +158,12 @@ public abstract class AbstractListTest extends AbstractionCollectionTest {
 		assertEquals(6,list1.shallowClone().add(5).size());
 		
 		assertEquals(5,list1.size());
+	}
+	
+	@Override
+	public void addValue(FixCollection<Integer> collection, int value) {
+		AbstractList<Integer> list=(AbstractList<Integer>) collection;
+		list.add(value);
+		
 	}
 }

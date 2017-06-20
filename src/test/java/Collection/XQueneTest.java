@@ -12,6 +12,7 @@ import Annotation.TestType;
 import CatCollection.XQuene;
 import CatCollection.XStack;
 import CatCollection.BaseCollection.FixCollection;
+import CatCollection.Chart.XChart;
 
 @TestType(Type = XQuene.class)
 public class XQueneTest extends FixCollectionTest{
@@ -40,7 +41,7 @@ public class XQueneTest extends FixCollectionTest{
 
 	@Test
 	public void testSize() {
-		assertEquals(1, quene.push(5).size());
+		assertEquals(1, quene.push(5).shallowClone().size());
 	}
 
 	@Test
@@ -80,4 +81,18 @@ public class XQueneTest extends FixCollectionTest{
 		
 	}
 
+	
+	@Override
+	public void addValue(FixCollection<Integer> collection, int value) {
+	
+		
+	}
+	
+	public void testShallowClone() {
+		InitValue(quene);
+		assertEquals("[5,4,3,2,1]", quene.shallowClone().toString());
+		assertEquals("[5,5,4,3,2,1]", quene.shallowClone().push(5).toString());
+	}
+	
+	
 }

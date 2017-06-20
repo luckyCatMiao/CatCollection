@@ -13,6 +13,7 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import CatCollection.Annotation.CollectionFlag;
 import CatCollection.Util.ArrayTool;
 
 /**
@@ -23,6 +24,39 @@ import CatCollection.Util.ArrayTool;
  */
 abstract public class FixCollection<T> implements MIterable<T>,Cloneable,Serializable {
 
+
+	/**
+	 * 为了保持内部状态的前后一致性 这些集合配置参数只能在创建时输入 之后就是只读状态
+	 * 如果不是只读 例如刚开始接受null之后不接受null 可能会造成混乱
+	 * 
+	 * 
+	 */
+	/**
+	 * 集合内的值是否可以重复
+	 */
+	@CollectionFlag
+	protected boolean flag_onlyValue=false;
+	/**
+	 * 是否接受null值
+	 */
+	@CollectionFlag
+	protected boolean flag_canNull=true;
+	
+
+	
+//--------------------------------------------------------------------------------------
+	
+	public FixCollection() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public FixCollection(boolean flag_onlyValue,boolean flag_canNull) {
+
+		this.flag_canNull=flag_canNull;
+		this.flag_onlyValue=flag_onlyValue;
+
+	};
+	
 	/**
 	 * 集合内元素数量
 	 * @return
@@ -37,6 +71,7 @@ abstract public class FixCollection<T> implements MIterable<T>,Cloneable,Seriali
 	    return size() == 0;
 	}
 
+	
 	/**
 	 * 转化成流(这里流框架就不自己写了 用java8的)
 	 * @return
@@ -125,6 +160,6 @@ abstract public class FixCollection<T> implements MIterable<T>,Cloneable,Seriali
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return ArrayTool.toString(toArray(Object.class), size()-1);
+		return ArrayTool.toString(toArray(Object.class), size());
 	}
 }

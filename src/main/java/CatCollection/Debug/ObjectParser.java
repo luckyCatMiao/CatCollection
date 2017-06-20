@@ -2,12 +2,12 @@ package CatCollection.Debug;
 
 public class ObjectParser {
 
-	public static String ParseArrayToString(Object[] data, int index, String prefix, String suffix, String link) {
+	public static String ParseArrayToString(Object[] data, int toIndex, String prefix, String suffix, String link) {
 		
 		StringBuffer stringBuffer=new StringBuffer(prefix);
-		for(int i=0;i<=index;i++)
+		for(int i=0;i<toIndex;i++)
 		{
-			if(i==index)
+			if(i==toIndex-1)
 			{
 				stringBuffer.append(data[i]);
 			}

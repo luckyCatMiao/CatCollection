@@ -22,6 +22,7 @@ public class XQuene<T> extends FixCollection<T> {
 		data=new XArrayList<>();
 	}
 	public XQuene(boolean flag_onlyValue, boolean flag_canNull) {
+		super(flag_onlyValue,flag_canNull);
 		data=new XArrayList<>(flag_onlyValue,flag_canNull);
 	}
 	
@@ -59,7 +60,7 @@ public class XQuene<T> extends FixCollection<T> {
 	public T pop()
 	{
 		
-		return data.getRangeAndRemove(data.size()-1, data.size()-1).toOneValue();
+		return data.getRangeAndRemove(data.size()-1, data.size()).toOneValue();
 		
 	}
 	
@@ -71,12 +72,11 @@ public class XQuene<T> extends FixCollection<T> {
 	
 	@Override
 	public XQuene<T> shallowClone() {
-		XQuene<T> quene=new XQuene<>();
-		for(T element:this)
+		XQuene<T> quene=new XQuene<>(flag_onlyValue,flag_canNull);
+		for(int i=data.size()-1;i>=0;i--)
 		{
-			quene.push(element);
+			quene.push(data.get(i));
 		}
-		
 		
 		return quene;
 	}

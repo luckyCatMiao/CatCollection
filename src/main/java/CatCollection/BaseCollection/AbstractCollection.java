@@ -24,42 +24,20 @@ import CatCollection.Exception.CollectionException.OnlyValueException;
  */
 public abstract class AbstractCollection<T> extends FixCollection<T>{
 
-	
-	/**
-	 * 为了保持内部状态的前后一致性 这些集合配置参数只能在创建时输入 之后就是只读状态
-	 * 如果不是只读 例如刚开始接受null之后不接受null 可能会造成混乱
-	 * 
-	 * 
-	 */
-	/**
-	 * 集合内的值是否可以重复
-	 */
-	@CollectionFlag
-	protected boolean flag_onlyValue=false;
-	/**
-	 * 是否接受null值
-	 */
-	@CollectionFlag
-	protected boolean flag_canNull=true;
-	
 
 	
-//--------------------------------------------------------------------------------------
 	
-	public AbstractCollection()
-	{
-		
+	
+	public AbstractCollection(boolean flag_onlyValue, boolean flag_canNull) {
+		super(flag_onlyValue,flag_canNull);
 	}
-	
-	public AbstractCollection(boolean flag_onlyValue,boolean flag_canNull) {
 
-		this.flag_canNull=flag_canNull;
-		this.flag_onlyValue=flag_onlyValue;
 
-	};
-	
-	
-	
+	public AbstractCollection() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	/**
 	 * 增加一个值
 	 * 先进行flag选项的测试 测试完成后再进入真正的添加 添加过程由子类完成 但是实际调用到的add方法还是

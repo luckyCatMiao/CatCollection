@@ -19,6 +19,7 @@ public class XStack<T> extends FixCollection<T>{
 		data=new XArrayList<>();
 	}
 	public XStack(boolean flag_onlyValue, boolean flag_canNull) {
+		super(flag_onlyValue,flag_canNull);
 		data=new XArrayList<>(flag_onlyValue,flag_canNull);
 	}
 	@Override
@@ -48,7 +49,7 @@ public class XStack<T> extends FixCollection<T>{
 	{
 		
 		
-		return data.getRangeAndRemove(data.size()-1, data.size()-1).toOneValue();
+		return data.getRangeAndRemove(data.size()-1, data.size()).toOneValue();
 		
 	}
 	
@@ -61,7 +62,7 @@ public class XStack<T> extends FixCollection<T>{
 
 	@Override
 	public XStack<T> shallowClone() {
-		XStack<T> stack=new XStack<>();
+		XStack<T> stack=new XStack<>(flag_onlyValue,flag_canNull);
 		for(T element:this)
 		{
 			stack.push(element);

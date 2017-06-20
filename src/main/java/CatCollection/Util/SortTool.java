@@ -103,8 +103,7 @@ public class SortTool {
 				if(comparator.compare(nowValue, loopValue)<0)
 				{
 					T cache=nowValue;
-					list.removeRange(i, i);
-					//System.arraycopy(list, a, list, a+1, i-a);
+					list.removeAt(i);
 					list.add(cache,a);
 					list.set(a, cache);
 					break;

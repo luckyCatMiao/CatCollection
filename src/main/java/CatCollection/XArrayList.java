@@ -130,7 +130,7 @@ public class XArrayList<T> extends AbstractList<T> {
 		int i;
 		if((i=indexOf(value))!=-1)
 		{
-			System.arraycopy(data, i+1, data, i, size()-i);
+			System.arraycopy(data, i+1, data, i, size()-1-i);
 			index--;
 		}
 		

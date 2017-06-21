@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import CatCollection.Annotation.CollectionFlag;
+import CatCollection.Exception.NullValueException;
+import CatCollection.Exception.CollectionException.OnlyValueException;
 import CatCollection.Util.ArrayTool;
 
 /**
@@ -161,5 +163,44 @@ abstract public class FixCollection<T> implements MIterable<T>,Cloneable,Seriali
 	public String toString() {
 		// TODO Auto-generated method stub
 		return ArrayTool.toString(toArray(Object.class), size());
+	}
+
+	protected void flag_notNullTest(T value) {
+		 //直接报错 该框架的特点就是及早报错
+		//毕竟自己设置了唯一 又添加重复的值 这是自己的问题 不应该由框架静默处理
+		
+		if(!flag_canNull&&value==null)
+		{
+			throw new NullValueException();
+		}
+	}
+
+	protected void flag_onlyValueTest(T value) {
+		//元素唯一而且不包含该值
+		if(flag_onlyValue&&contain(value))
+		{
+			throw new OnlyValueException(value);
+		}
+	}
+
+	/**
+	 * 检测该值是否存在
+	 * @param value
+	 */
+	public boolean contain(T value) {
+		//如果设置了不能为null 也不能用null查询
+		flag_notNullTest(value);
+		
+		
+	     for(T elements:this)
+	     {
+	    	 if(elements.equals(value))
+	    	 {
+	    		 return true;
+	    	 }
+	     }
+		 
+	        
+		return false;
 	}
 }

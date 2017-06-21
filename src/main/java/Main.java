@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import CatCollection.XArrayList;
@@ -7,8 +8,9 @@ import CatCollection.XLinkedList;
 import CatCollection.XStack;
 import CatCollection.Chart.ChartTool;
 import CatCollection.Chart.XChart;
+import CatCollection.Map.XHashMap;
 import CatCollection.Tree.XTree;
-import Collection.ChartToolTest;
+
 
 public class Main {
 
@@ -66,17 +68,31 @@ public class Main {
 		
 		
 
-		XTree<Integer> tree1=new XTree<>();
-		tree1.addNode(3,null);
+//		XTree<Integer> tree1=new XTree<>();
+//		tree1.addNode(3,null);
+//		
+//		tree1.addNode(2, 3);
+//		tree1.addNode(1, 3);
+//		
+//		tree1.addNode(4, 2);
+//		tree1.addNode(6, 2);
+//		
+//		tree1.addNode(3, 1);
+//		tree1.addNode(7, 1);
 		
-		tree1.addNode(2, 3);
-		tree1.addNode(1, 3);
 		
-		tree1.addNode(4, 2);
-		tree1.addNode(6, 2);
+		XHashMap<String, Integer> hashMap=new XHashMap<>();
+		hashMap.put("1", 1);
+		hashMap.put("1", 3);
+//		for(int i=2;i<1000;i++)
+//		{
+//			hashMap.put(i+"", i);
+//		}
 		
-		tree1.addNode(3, 1);
-		tree1.addNode(7, 1);
+		hashMap.remove("1");
+		System.out.println(hashMap);
+		System.out.println(hashMap.get("1"));
+		
 		
 	}
 }

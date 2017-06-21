@@ -265,7 +265,7 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		}
 		else
 		{
-			AbstractCollection<T> abstractList=getRange(index,size());
+			FixCollection<T> abstractList=getRange(index,size());
 			removeRange(index, size());
 			add(value);
 			addAll(abstractList.toArray(Object.class));

@@ -5,7 +5,8 @@ package Collection;
 
 import CatCollection.XArrayList;
 import CatCollection.XQuene;
-import CatCollection.Tree.XTreeList;
+import CatCollection.Map.XHashMap;
+import CatCollection.Tree.XBinaryTree;
 
  @RunWith(Suite. class )
  @Suite.SuiteClasses( {
@@ -18,7 +19,8 @@ import CatCollection.Tree.XTreeList;
          XLinkedListTest.class,
          ChartToolTest.class,
          XChartTest.class,
-         XTreeList.class
+         XBinaryTreeTest.class,
+         XHashMapTest.class
          
          } )
  public   class  TestAll  {

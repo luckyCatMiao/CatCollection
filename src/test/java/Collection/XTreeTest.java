@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import CatCollection.Tree.XTree;
-import CatCollection.Tree.XTreeList;
+import CatCollection.Tree.XBinaryTree;
 public class XTreeTest {
 	private XTree<Integer> tree1;
 

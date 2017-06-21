@@ -13,8 +13,6 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 
 import CatCollection.Annotation.CollectionFlag;
-import CatCollection.Exception.NullValueException;
-import CatCollection.Exception.CollectionException.OnlyValueException;
 
 /**
  * 元素集合基类
@@ -44,7 +42,7 @@ public abstract class AbstractCollection<T> extends FixCollection<T>{
 	 * 该类的
 	 * @param value
 	 */
-	public AbstractCollection<T> add(T value)
+	public FixCollection<T> add(T value)
 	{
 		flag_onlyValueTest(value);
 		flag_notNullTest(value);
@@ -77,51 +75,11 @@ public abstract class AbstractCollection<T> extends FixCollection<T>{
 	
 	
 
-	private void flag_notNullTest(T value) {
-		 //直接报错 该框架的特点就是及早报错
-		//毕竟自己设置了唯一 又添加重复的值 这是自己的问题 不应该由框架静默处理
-		
-		if(!flag_canNull&&value==null)
-		{
-			throw new NullValueException();
-		}
-	}
-
-	private void flag_onlyValueTest(T value) {
-		//元素唯一而且不包含该值
-		if(flag_onlyValue&&contain(value))
-		{
-			throw new OnlyValueException(value);
-		}
-	}
-
-	/**
-	 * 检测该值是否存在
-	 * @param value
-	 */
-	public boolean contain(T value)
-	{
-		//如果设置了不能为null 也不能用null查询
-		flag_notNullTest(value);
-		
-		
-	     for(T elements:this)
-	     {
-	    	 if(elements.equals(value))
-	    	 {
-	    		 return true;
-	    	 }
-	     }
-		 
-	        
-		return false;
-	}
-	
 	/**
 	 * 清空集合
 	 * @return
 	 */
-	public AbstractCollection<T> clear() {
+	public FixCollection<T> clear() {
 		while(size()>0)
 		{
 			for(T element:this)
@@ -140,7 +98,7 @@ public abstract class AbstractCollection<T> extends FixCollection<T>{
 	 * @param values
 	 * @return
 	 */
-	public AbstractCollection<T> addAll(T... values)
+	public FixCollection<T> addAll(T... values)
 	{
 		
 		for(T value:values)
@@ -157,7 +115,7 @@ public abstract class AbstractCollection<T> extends FixCollection<T>{
 	 * @param values
 	 * @return
 	 */
-	public AbstractCollection<T> removeAll(FixCollection<T> collection)
+	public FixCollection<T> removeAll(FixCollection<T> collection)
 	{
 		
 		for(T value:collection)
@@ -173,7 +131,7 @@ public abstract class AbstractCollection<T> extends FixCollection<T>{
 	 * @param values
 	 * @return
 	 */
-	public AbstractCollection<T> addAll(FixCollection<T> collection)
+	public FixCollection<T> addAll(FixCollection<T> collection)
 	{
 		
 		for(T value:collection)
@@ -190,7 +148,7 @@ public abstract class AbstractCollection<T> extends FixCollection<T>{
 	 * @param values
 	 * @return
 	 */
-	public AbstractCollection<T> removeAll(T... values)
+	public FixCollection<T> removeAll(T... values)
 	{
 		
 		for(T value:values)

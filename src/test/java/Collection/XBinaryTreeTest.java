@@ -3,17 +3,17 @@ package Collection;
 import org.junit.Before;
 import org.junit.Test;
 
-import CatCollection.Tree.XTreeList;
+import CatCollection.Tree.XBinaryTree;
 
-public class XTreeListTest {
+public class XBinaryTreeTest {
 
 	
-	private XTreeList<Integer> tree1;
+	private XBinaryTree<Integer> tree1;
 
 	@Before
 	public void Before()
 	{
-		this.tree1=new XTreeList<>();
+		this.tree1=new XBinaryTree<>();
 		tree1.add(3);
 		tree1.add(2);
 		tree1.add(1);
@@ -32,7 +32,7 @@ public class XTreeListTest {
 	@Test
 	public void TestImageString()
 	{
-		System.out.println(tree1.toImageString());
+	
 		
 		
 	}

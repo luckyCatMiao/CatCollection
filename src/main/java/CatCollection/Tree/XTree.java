@@ -1,47 +1,77 @@
 package CatCollection.Tree;
 
+import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
 
+import CatCollection.XLinkedList;
 import CatCollection.XStack;
 import CatCollection.BaseCollection.FixCollection;
 import CatCollection.Chart.XChart;
+import CatCollection.Exception.NullValueException;
 
 /**
- * 树 这里实现为图的特例(内部使用图存储数据)
+ * 多叉树 
  * @author Administrator
  *
  */
 public class XTree<T> extends FixCollection<T>{
 	
 	
-
-	
-	private T root;
-	private XChart<T> chart;
-
-	
-	/**
-	 * 树强制不能输入空值和重复值 一旦可以输入 就要进行多余的判断 完全失去了树的性能优势
-	 *因此强制不能插入空值和重复值
-	 */
-	public XTree() {
-
+	private class TreeNode implements Serializable
+	{
 		
-		chart=new XChart<>(true,false);
+		public T value;
+		public XLinkedList<TreeNode> childs=new XLinkedList<>();
+		
+		
+		@Override
+		public boolean equals(Object obj) {
+			
+			if(obj.getClass()==TreeNode.class)
+			{
+				
+				TreeNode node=(XTree<T>.TreeNode) obj;
+				
+				return value.equals(node.value);
+			}
+			
+			return super.equals(obj);
+		}
+	}
+	
+	
+
+	private TreeNode rootNode;
+	
+
+	
+	
+	
+	public XTree() {
+		
+	
+	};
+	
+	public XTree(boolean flag_onlyValue,boolean flag_canNull) {
+		super(flag_onlyValue,flag_canNull);
+		
+		
 	};
 	
 	
 	
 	@Override
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return chart.iterator();
+		
+		return null;
 	}
 
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return chart.size();
+		return 0;
 	}
 
 	@Override
@@ -51,22 +81,77 @@ public class XTree<T> extends FixCollection<T>{
 	}
 	
 
-	public XTree<T> addNode(T value,T root) {
-		if(this.root==null)
+	public XTree<T> addNode(T value,T parent) {
+		
+		flag_onlyValueTest(value);
+		flag_notNullTest(value);
+		
+		
+		if(this.rootNode==null)
 		{
-			this.root=value;
-			chart.addNode(value);
+			TreeNode node=CreateNode(value);
+			this.rootNode=node;
+		
 		}
 		else
 		{
-			chart.addNode(value);
-			chart.linkNode(root, value, false);
+			
+			TreeNode parentNode=getNodeByValue(parent);
+			TreeNode node=CreateNode(value);
+			parentNode.childs.add(node);
 		}
 		
 		return this;
 		
 	}
 	
+	private XTree<T>.TreeNode getNodeByValue(T value) {
+	
+		//这样做明显会降低效率  不过算了 这个树就当一种抽象数据结构了
+		//二叉搜索树重新写不继承这个算了 没办法
+		for(TreeNode element:allTreeNodes())
+		{
+			if(element.value.equals(value))
+			{
+				return  element;
+			}
+		}
+		
+		
+		throw new NullValueException();
+		
+	}
+
+
+
+	private XLinkedList<TreeNode> allTreeNodes() {
+		
+		
+		
+		
+		return _getNodesChilds(rootNode);
+	}
+
+	private XLinkedList<TreeNode> _getNodesChilds(TreeNode root) {
+		
+		XLinkedList<TreeNode> nodes=new XLinkedList<>();
+		nodes.add(root);
+		for(TreeNode node:root.childs)
+		{
+			nodes.addAll(_getNodesChilds(node));
+		}
+		
+		
+		return nodes;
+	}
+
+	private XTree<T>.TreeNode CreateNode(T value) {
+		TreeNode node=new TreeNode();
+		node.value=value;
+		
+		return node;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -80,17 +165,17 @@ public class XTree<T> extends FixCollection<T>{
 	public String toImageString() {
 		
 
-		return getNodeString(root);
+		return getNodeString(rootNode);
 	}
 
 	/**
 	 * 递归方法 获取当前节点构成的子树的字符串描述
-	 * @param node
+	 * @param rootNode
 	 * @return
 	 */
-	private String getNodeString(T node) {
+	private String getNodeString(XTree<T>.TreeNode rootNode) {
 	
-		if(node==null)
+		if(rootNode==null)
 		{
 			return "";
 		}
@@ -100,19 +185,19 @@ public class XTree<T> extends FixCollection<T>{
 		StringBuffer stringBuffer=new StringBuffer();
 		//使用类似深度优先搜索的方法遍历树
 		
-		XStack<T> stack=new XStack<>();
-		stack.push(node);
+		XStack<TreeNode> stack=new XStack<>();
+		stack.push(rootNode);
 		while(true)
 		{
-			XStack<T> stack2=new XStack<>();
+			XStack<TreeNode> stack2=new XStack<>();
 			//输出当前层
 			while(!stack.isEmpty())
 			{
-				T value=stack.pop();
+				TreeNode node=stack.pop();
 				//貌似用图的特例来实现有点低效..因为我把图封装的太好了..
 				//到时候把图的内部用哈希表来存储节点可能会好一些
-				stringBuffer.append(value+" ");
-				for(T child:chart.getLinkedPoint(value))
+				stringBuffer.append(node.value+" ");
+				for(TreeNode child:node.childs)
 				{
 					stack2.push(child);
 				}

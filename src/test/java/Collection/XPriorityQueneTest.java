@@ -53,6 +53,21 @@ public class XPriorityQueneTest{
 		
 	}
 
-
+	@Test
+	public void testPop() {
+		XPriorityQuene<Integer> quene=new XPriorityQuene<>((a,b)->a-b);
+		
+		quene.isEmpty();
+		
+		quene.push(5);
+		quene.push(10);
+		quene.push(3);
+		quene.push(0);
+		quene.push(10);
+		assertEquals(10, quene.pop(),0);
+		assertEquals(10, quene.pop(),0);
+		
+		
+	}
 
 }

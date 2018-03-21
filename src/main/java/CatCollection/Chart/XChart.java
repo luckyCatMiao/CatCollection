@@ -1,5 +1,6 @@
 package CatCollection.Chart;
 
+import java.awt.List;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -189,7 +190,7 @@ public class XChart<T> extends FixCollection<T>{
 
 	public XLinkedList<T> getLinkedPoint(T value) {
 		CheckContainNode(value);
-		
+	
 		
 		for(ChartNode node:linkedList)
 		{

@@ -112,7 +112,6 @@ public abstract class AbstractCollection<T> extends FixCollection<T>{
 	
 	/**
 	 * 移除所有
-	 * @param values
 	 * @return
 	 */
 	public FixCollection<T> removeAll(FixCollection<T> collection)
@@ -128,7 +127,6 @@ public abstract class AbstractCollection<T> extends FixCollection<T>{
 
 	/**
 	 * 添加所有
-	 * @param values
 	 * @return
 	 */
 	public FixCollection<T> addAll(FixCollection<T> collection)

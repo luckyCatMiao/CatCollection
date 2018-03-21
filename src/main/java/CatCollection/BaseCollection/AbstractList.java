@@ -64,8 +64,8 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 	 */
 
 	public int indexOf(T value) {
-		if(getComparator()==null)
-		{
+//		if(getComparator()==null)
+//		{
 		for(int i=0;i<size();i++)
 		{
 			if(get(i).equals(value))
@@ -73,12 +73,17 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 				return i;
 			}
 		}
-		}
-		else
-		{
-			//排序之后使用二分法查找索引
-			return binarySearch(value);
-		}
+		
+		//二分法有未知的bug 主要是equal和compare==0的矛盾 不知道怎么解决
+		//java的解决方法好像就是compare==0就默认为equal
+		//这样的话写comparator就很麻烦了如果有重复的情况还要根据第二个值二次排序
+		//还不如全用遍历算了 反正我这框架性能本来也没注重性能
+//		}
+//		else
+//		{
+//			//排序之后使用二分法查找索引
+//			return binarySearch(value);
+//		}
 		
 		return -1;
 	}
@@ -94,12 +99,12 @@ public abstract class AbstractList<T> extends AbstractCollection<T> {
 		int centerIndex;
 		T centerValue;
 		
-		while(downIndex<=upIndex)
+		while(downIndex<upIndex)
 		{
 			centerIndex=(downIndex+upIndex)/2;
 			
 			centerValue=get(centerIndex);
-			if(centerValue.equals(target))
+			if(centerValue.equals(target)||comparator.compare(centerValue, target)==0)
 			{
 				return centerIndex;
 			}

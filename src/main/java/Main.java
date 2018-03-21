@@ -5,7 +5,10 @@ import java.util.List;
 
 import CatCollection.XArrayList;
 import CatCollection.XLinkedList;
+import CatCollection.XPriorityQuene;
 import CatCollection.XStack;
+import CatCollection.Advanced.TwoDArray;
+import CatCollection.Advanced.TwoDArray.ArrayPoint;
 import CatCollection.Chart.ChartTool;
 import CatCollection.Chart.XChart;
 import CatCollection.Map.XHashMap;
@@ -80,19 +83,35 @@ public class Main {
 //		tree1.addNode(3, 1);
 //		tree1.addNode(7, 1);
 		
+//		
+//		XHashMap<String, Integer> hashMap=new XHashMap<>();
+//		hashMap.put("1", 1);
+//		hashMap.put("1", 3);
+////		for(int i=2;i<1000;i++)
+////		{
+////			hashMap.put(i+"", i);
+////		}
+//		
+//		hashMap.remove("1");
+//		System.out.println(hashMap);
+//		System.out.println(hashMap.get("1"));
+
 		
-		XHashMap<String, Integer> hashMap=new XHashMap<>();
-		hashMap.put("1", 1);
-		hashMap.put("1", 3);
-//		for(int i=2;i<1000;i++)
+//		TwoDArray<Integer> twoDArray=new TwoDArray<>(10,10);
+//		twoDArray.addAt(0, 0, 5);
+//		twoDArray.addAt(5, 0, 5);
+//		System.out.println(twoDArray.getAt(0, 0));
+//		twoDArray.printPlane();
+//		
+//		for(ArrayPoint point:twoDArray.arrayPoints())
 //		{
-//			hashMap.put(i+"", i);
+//			System.out.println(point.getValue());
 //		}
+//		
+//		twoDArray.fill(0);
+//		twoDArray.printPlane();
 		
-		hashMap.remove("1");
-		System.out.println(hashMap);
-		System.out.println(hashMap.get("1"));
 		
-		
+		new XPriorityQuene<String>(null).deepClone();
 	}
 }

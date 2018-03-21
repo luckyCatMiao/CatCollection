@@ -20,6 +20,7 @@ public class SortTool {
 	 */
 	static public <T> AbstractList<T> BubbleSort(AbstractList<T> list,Comparator<T> comparator)
 	{
+		 
 		//每轮将一个数移动到最右边
 			int size=list.size();
 		   for(int i=0;i<size;i++)
@@ -99,7 +100,7 @@ public class SortTool {
 			for(int a=0;a<i;a++)
 			{
 				T loopValue=list.get(a);
-				//如果小于最左边的数 则直接交换
+				//如果小于左边的数 则直接交换
 				if(comparator.compare(nowValue, loopValue)<0)
 				{
 					T cache=nowValue;

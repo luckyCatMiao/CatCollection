@@ -17,6 +17,8 @@ import CatCollection.XArrayList;
 import CatCollection.BaseCollection.AbstractCollection;
 import CatCollection.BaseCollection.AbstractList;
 import CatCollection.BaseCollection.FixCollection;
+import TestBean.CloneBean;
+import TestBean.CloneBean2;
 
 /**
  * 貌似junit为每个测试方法都重新创建一个类 即每次创建一个类只测试一个方法
@@ -54,6 +56,36 @@ public class XArrayListTest extends AbstractListTest {
 		list1.add(3);
 		list1.add(2);
 		list1.add(1);
+		
+	}
+	
+
+	protected void BinarySearchTest() {
+		
+		XArrayList<Integer> list1=new XArrayList<>();
+		list1.setComparator((a,b)->a-b);
+		list1.add(6);
+		list1.add(6);
+		list1.add(6);
+		list1.add(6);
+		list1.add(6);
+		list1.add(6);
+		
+		
+	}
+	
+	
+	@Override
+	public void testDeepClone() {
+	
+		XArrayList<CloneBean> list1=new XArrayList<>();
+		
+		list1.add(new CloneBean(new CloneBean2(5), 4));
+		XArrayList<CloneBean> list2=(XArrayList<CloneBean>) list1.deepClone();
+		assertNotEquals(list1, list2);
+		assertNotEquals(list1.get(0), list2.get(0));
+
+		
 		
 	}
 	

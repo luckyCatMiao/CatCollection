@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/2017.6.12CatCollections.iml" filepath="$PROJECT_DIR$/2017.6.12CatCollections.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2017.6.12CatCollections_main.iml" filepath="$PROJECT_DIR$/.idea/modules/2017.6.12CatCollections_main.iml" group="2017.6.12CatCollections" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2017.6.12CatCollections_test.iml" filepath="$PROJECT_DIR$/.idea/modules/2017.6.12CatCollections_test.iml" group="2017.6.12CatCollections" />
+    </modules>
+  </component>
+</project>
